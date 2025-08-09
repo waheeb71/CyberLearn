@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button'; // أضفنا هذا
 import { 
-  User, 
-  Mail, 
-  Calendar, 
-  Award, 
-  Star,
-  TrendingUp,
-  Shield,
-  Target,
-  Medal,
-  Crown,
-  Gem,
-  Lock
+  User, 
+  Mail, 
+  Calendar, 
+  Award, 
+  Star,
+  TrendingUp,
+  Shield,
+  Target,
+  Medal,
+  Crown,
+  Gem,
+  Lock,
+  BookMarked
 } from 'lucide-react';
 
+import userManager from './path/to/UserManager'; // تأكد من المسار الصحيح
 
-const Profile = ({ user }) => {
+const Profile = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      const currentUser = await userManager.getCurrentUser();
+      setUser(currentUser);
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, []);
+
   const sections = [
     { key: 'basics', name: '🚀 الأساسيات' },
     { key: 'fundamentals', name: '🔎 المفاهيم الأساسية' },
@@ -31,6 +49,25 @@ const Profile = ({ user }) => {
     { key: 'roadmap', name: '📅 خارطة طريق 6 أشهر' },
     { key: 'additionalResources', name: '💡 موارد إضافية' }
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>جاري تحميل الملف الشخصي...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center">
+        <p className="text-xl font-semibold mb-4">يجب عليك تسجيل الدخول لعرض هذه الصفحة.</p>
+        <Link to="/login">
+          <Button>تسجيل الدخول</Button>
+        </Link>
+      </div>
+    );
+  }
 
   const completedSections = Object.values(user.progress).filter(p => p.completed).length;
   const totalSections = sections.length;
@@ -51,94 +88,38 @@ const Profile = ({ user }) => {
 
   const levelInfo = getLevelInfo(user.level);
 
- const getAchievements = () => {
-  const achievements = [];
-
-  if (completedSections >= 1) {
-    achievements.push({
-      title: 'البداية القوية',
-      description: 'أكمل أول قسم في المسار',
-      icon: <Target className="h-6 w-6 text-green-700" />,
-      earned: true
+  const getAchievements = () => {
+    const achievements = [];
+    
+    // الأقسام المكتملة
+    const completedAchievements = [
+      { title: 'البداية القوية', description: 'أكمل أول قسم في المسار', condition: completedSections >= 1, icon: <Target className="h-6 w-6 text-green-700" /> },
+      { title: 'المتعلم المثابر', description: 'أكمل 3 أقسام من المسار', condition: completedSections >= 3, icon: <BookMarked className="h-6 w-6 text-green-700" /> },
+      { title: 'نصف الطريق', description: 'أكمل نصف المسار التعليمي', condition: completedSections >= 5, icon: <Star className="h-6 w-6 text-green-700" /> },
+      { title: 'المتفوق', description: 'أكمل 8 أقسام من المسار', condition: completedSections >= 8, icon: <Medal className="h-6 w-6 text-green-700" /> },
+      { title: 'بطل الأمن السيبراني', description: 'أكمل جميع أقسام المسار', condition: completedSections === totalSections, icon: <Award className="h-6 w-6 text-green-700" /> },
+    ];
+    
+    // النقاط
+    const pointsAchievements = [
+      { title: 'جامع النقاط', description: 'حصل على 50 نقطة أو أكثر', condition: user.totalPoints >= 50, icon: <Gem className="h-6 w-6 text-green-700" /> },
+      { title: 'ملك النقاط', description: 'حصل على 100 نقطة أو أكثر', condition: user.totalPoints >= 100, icon: <Crown className="h-6 w-6 text-green-700" /> },
+    ];
+    
+    // دمج الإنجازات المكتملة وغير المكتملة
+    const allAchievements = [...completedAchievements, ...pointsAchievements];
+    
+    allAchievements.forEach(ach => {
+      if (ach.condition) {
+        achievements.push({ ...ach, earned: true });
+      } else {
+        achievements.push({ ...ach, earned: false, icon: <Lock className="h-6 w-6 text-gray-400" /> });
+      }
     });
-  }
 
-  if (completedSections >= 3) {
-    achievements.push({
-      title: 'المتعلم المثابر',
-      description: 'أكمل 3 أقسام من المسار',
-      icon: <BookMarked className="h-6 w-6 text-green-700" />,
-      earned: true
-    });
-  }
-
-  if (completedSections >= 5) {
-    achievements.push({
-      title: 'نصف الطريق',
-      description: 'أكمل نصف المسار التعليمي',
-      icon: <Star className="h-6 w-6 text-green-700" />,
-      earned: true
-    });
-  }
-
-  if (completedSections >= 8) {
-    achievements.push({
-      title: 'المتفوق',
-      description: 'أكمل 8 أقسام من المسار',
-      icon: <Medal className="h-6 w-6 text-green-700" />,
-      earned: true
-    });
-  }
-
-  if (completedSections === totalSections) {
-    achievements.push({
-      title: 'بطل الأمن السيبراني',
-      description: 'أكمل جميع أقسام المسار',
-      icon: <Award className="h-6 w-6 text-green-700" />,
-      earned: true
-    });
-  }
-
-  if (user.totalPoints >= 50) {
-    achievements.push({
-      title: 'جامع النقاط',
-      description: 'حصل على 50 نقطة أو أكثر',
-      icon: <Gem className="h-6 w-6 text-green-700" />,
-      earned: true
-    });
-  }
-
-  if (user.totalPoints >= 100) {
-    achievements.push({
-      title: 'ملك النقاط',
-      description: 'حصل على 100 نقطة أو أكثر',
-      icon: <Crown className="h-6 w-6 text-green-700" />,
-      earned: true
-    });
-  }
-
-  // Achievements locked
-  if (completedSections < 1) {
-    achievements.push({
-      title: 'البداية القوية',
-      description: 'أكمل أول قسم في المسار',
-      icon: <Lock className="h-6 w-6 text-gray-400" />,
-      earned: false
-    });
-  }
-
-  if (completedSections < totalSections) {
-    achievements.push({
-      title: 'بطل الأمن السيبراني',
-      description: 'أكمل جميع أقسام المسار',
-      icon: <Lock className="h-6 w-6 text-gray-400" />,
-      earned: false
-    });
-  }
-
-  return achievements;
-};
-
+    // يمكنك تحسين عرض الإنجازات لفرز المكتملة أولاً
+    return achievements.sort((a, b) => (b.earned - a.earned));
+  };
 
   const achievements = getAchievements();
 
@@ -289,7 +270,7 @@ const Profile = ({ user }) => {
                       }`}
                     >
                       <div className="flex items-center space-x-3 rtl:space-x-reverse mb-2">
-                       <span>{achievement.icon}</span>
+                        <span>{achievement.icon}</span>
                         <h3 className={`font-medium ${achievement.earned ? 'text-green-800' : 'text-gray-600'}`}>
                           {achievement.title}
                         </h3>
@@ -310,4 +291,3 @@ const Profile = ({ user }) => {
 };
 
 export default Profile;
-

@@ -1,75 +1,16 @@
-// User Management System using localStorage
-// This handles user registration, login, and progress tracking
+// UserManager.js
+import { db } from './firebaseConfig'; // استيراد قاعدة البيانات من ملف الإعداد
+import { collection, doc, setDoc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 class UserManager {
   constructor() {
-    this.storageKey = 'cyberlearn_users';
-    this.currentUserKey = 'cyberlearn_current_user';
-    this.init();
+    this.usersCollectionRef = collection(db, 'users');
+    this.currentUserKey = 'cyberlearn_current_user_id';
   }
 
-  init() {
-    // Initialize storage if it doesn't exist
-    if (!localStorage.getItem(this.storageKey)) {
-      localStorage.setItem(this.storageKey, JSON.stringify({}));
-    }
-    
-    // Add demo user if no users exist
-    const users = this.getAllUsers();
-    if (Object.keys(users).length === 0) {
-      this.createDemoUser();
-    }
-  }
-
-  createDemoUser() {
-    const demoUser = {
-      id: 'demo_user',
-      name: 'مستخدم تجريبي',
-      email: 'demo@example.com',
-      password: 'demo123', // In real app, this would be hashed
-      registrationDate: new Date().toISOString(),
-      level: 1,
-      totalPoints: 0,
-      progress: {
-        basics: { completed: false, score: 0, completedAt: null },
-        fundamentals: { completed: false, score: 0, completedAt: null },
-        specialization: { completed: false, score: 0, completedAt: null },
-        practicalExperience: { completed: false, score: 0, completedAt: null },
-        continuousLearning: { completed: false, score: 0, completedAt: null },
-        youtubeChannels: { completed: false, score: 0, completedAt: null },
-        jobRoles: { completed: false, score: 0, completedAt: null },
-        certifications: { completed: false, score: 0, completedAt: null },
-        roadmap: { completed: false, score: 0, completedAt: null },
-        additionalResources: { completed: false, score: 0, completedAt: null }
-      }
-    };
-    
-    const users = this.getAllUsers();
-    users[demoUser.email] = demoUser;
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  getAllUsers() {
-    try {
-      return JSON.parse(localStorage.getItem(this.storageKey)) || {};
-    } catch (error) {
-      console.error('Error parsing users data:', error);
-      return {};
-    }
-  }
-
-  saveUsers(users) {
-    localStorage.setItem(this.storageKey, JSON.stringify(users));
-  }
-
-  generateUserId() {
-    return 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-  }
-
-  register(userData) {
+  async register(userData) {
     const { name, email, password } = userData;
     
-    // Validate input
     if (!name || !email || !password) {
       return { success: false, message: 'جميع الحقول مطلوبة' };
     }
@@ -78,23 +19,26 @@ class UserManager {
       return { success: false, message: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل' };
     }
 
-    const users = this.getAllUsers();
-    
-    // Check if user already exists
-    if (users[email]) {
-      return { success: false, message: 'المستخدم موجود بالفعل' };
-    }
+    try {
+      // التحقق من وجود المستخدم مسبقًا
+      const userRef = doc(this.usersCollectionRef, email);
+      const userSnap = await getDoc(userRef);
 
-    // Create new user
-    const newUser = {
-      id: this.generateUserId(),
-      name,
-      email,
-      password, // In real app, this would be hashed
-      registrationDate: new Date().toISOString(),
-      level: 1,
-      totalPoints: 0,
-      progress: {
+      if (userSnap.exists()) {
+        return { success: false, message: 'المستخدم موجود بالفعل' };
+      }
+
+      // إنشاء مستخدم جديد في Firestore
+      const newUser = {
+        id: email, // استخدام البريد الإلكتروني كمعرف فريد
+        name,
+        email,
+        password, // تذكير: يجب استخدام Firebase Auth لحفظ كلمات المرور بشكل آمن
+        registrationDate: new Date().toISOString(),
+        level: 1,
+        totalPoints: 0,
+        progress: {
+        
         basics: { completed: false, score: 0, completedAt: null },
         fundamentals: { completed: false, score: 0, completedAt: null },
         specialization: { completed: false, score: 0, completedAt: null },
@@ -105,32 +49,48 @@ class UserManager {
         certifications: { completed: false, score: 0, completedAt: null },
         roadmap: { completed: false, score: 0, completedAt: null },
         additionalResources: { completed: false, score: 0, completedAt: null }
-      }
-    };
+        }
+      };
 
-    users[email] = newUser;
-    this.saveUsers(users);
-    
-    // Auto login after registration
-    this.setCurrentUser(newUser);
-    
-    return { success: true, user: newUser };
+      await setDoc(userRef, newUser);
+      
+      // حفظ معرف المستخدم في localStorage لتتبع الجلسة
+      localStorage.setItem(this.currentUserKey, newUser.id);
+      
+      return { success: true, user: newUser };
+    } catch (error) {
+      console.error("Error registering user:", error);
+      return { success: false, message: 'حدث خطأ أثناء التسجيل' };
+    }
   }
 
-  login(email, password) {
-    const users = this.getAllUsers();
-    const user = users[email];
-    
-    if (!user) {
-      return { success: false, message: 'المستخدم غير موجود' };
+  async login(email, password) {
+    if (!email || !password) {
+      return { success: false, message: 'البريد الإلكتروني وكلمة المرور مطلوبان' };
     }
 
-    if (user.password !== password) {
-      return { success: false, message: 'كلمة المرور غير صحيحة' };
-    }
+    try {
+      const userRef = doc(this.usersCollectionRef, email);
+      const userSnap = await getDoc(userRef);
+      
+      if (!userSnap.exists()) {
+        return { success: false, message: 'المستخدم غير موجود' };
+      }
 
-    this.setCurrentUser(user);
-    return { success: true, user };
+      const userData = userSnap.data();
+      
+      if (userData.password !== password) {
+        return { success: false, message: 'كلمة المرور غير صحيحة' };
+      }
+
+      // حفظ معرف المستخدم في localStorage لتتبع الجلسة
+      localStorage.setItem(this.currentUserKey, userData.id);
+      
+      return { success: true, user: userData };
+    } catch (error) {
+      console.error("Error logging in:", error);
+      return { success: false, message: 'حدث خطأ أثناء تسجيل الدخول' };
+    }
   }
 
   logout() {
@@ -138,161 +98,86 @@ class UserManager {
     return { success: true };
   }
 
-  getCurrentUser() {
+  async getCurrentUser() {
+    const currentUserId = localStorage.getItem(this.currentUserKey);
+    if (!currentUserId) {
+      return null;
+    }
+
     try {
-      const userData = localStorage.getItem(this.currentUserKey);
-      if (!userData) return null;
+      const userRef = doc(this.usersCollectionRef, currentUserId);
+      const userSnap = await getDoc(userRef);
       
-      const user = JSON.parse(userData);
-      
-      // Get fresh user data from storage to ensure it's up to date
-      const users = this.getAllUsers();
-      const freshUser = users[user.email];
-      
-      if (freshUser) {
-        this.setCurrentUser(freshUser);
-        return freshUser;
+      if (userSnap.exists()) {
+        return userSnap.data();
+      } else {
+        // المستخدم لم يعد موجودًا في قاعدة البيانات، يجب إزالة الجلسة
+        this.logout();
+        return null;
       }
-      
-      return user;
     } catch (error) {
       console.error('Error getting current user:', error);
+      this.logout();
       return null;
     }
   }
 
-  setCurrentUser(user) {
-    localStorage.setItem(this.currentUserKey, JSON.stringify(user));
-  }
-
-  updateUserProgress(sectionKey, completed, score) {
-    const currentUser = this.getCurrentUser();
+  async updateUserProgress(sectionKey, completed, score) {
+    const currentUser = await this.getCurrentUser();
     if (!currentUser) {
       return { success: false, message: 'المستخدم غير مسجل الدخول' };
     }
 
-    const users = this.getAllUsers();
-    const user = users[currentUser.email];
-    
-    if (!user) {
-      return { success: false, message: 'المستخدم غير موجود' };
-    }
-
-    // Update progress
-    user.progress[sectionKey] = {
-      completed,
-      score: completed ? score : 0,
-      completedAt: completed ? new Date().toISOString() : null
-    };
-
-    // Recalculate total points and level
-    user.totalPoints = Object.values(user.progress)
-      .filter(p => p.completed)
-      .reduce((total, p) => total + p.score, 0);
-    
-    // Calculate level (every 50 points = 1 level)
-    user.level = Math.floor(user.totalPoints / 50) + 1;
-
-    // Save updated user data
-    users[currentUser.email] = user;
-    this.saveUsers(users);
-    this.setCurrentUser(user);
-
-    return { success: true, user };
-  }
-
-  exportUserData() {
-    const currentUser = this.getCurrentUser();
-    if (!currentUser) return null;
-    
-    return {
-      exportDate: new Date().toISOString(),
-      userData: currentUser
-    };
-  }
-
-  importUserData(data) {
     try {
-      if (!data.userData) {
-        return { success: false, message: 'بيانات غير صالحة' };
-      }
+      const userRef = doc(this.usersCollectionRef, currentUser.id);
+      
+      // تحديث البيانات في Firestore
+      const newProgress = { ...currentUser.progress };
+      newProgress[sectionKey] = {
+        completed,
+        score: completed ? score : 0,
+        completedAt: completed ? new Date().toISOString() : null
+      };
 
-      const users = this.getAllUsers();
-      users[data.userData.email] = data.userData;
-      this.saveUsers(users);
-      this.setCurrentUser(data.userData);
+      const totalPoints = Object.values(newProgress)
+        .filter(p => p.completed)
+        .reduce((total, p) => total + p.score, 0);
 
-      return { success: true, user: data.userData };
+      const newLevel = Math.floor(totalPoints / 50) + 1;
+
+      await updateDoc(userRef, {
+        progress: newProgress,
+        totalPoints,
+        level: newLevel
+      });
+
+      // جلب البيانات المحدثة
+      const updatedUser = await this.getCurrentUser();
+      
+      return { success: true, user: updatedUser };
     } catch (error) {
-      return { success: false, message: 'خطأ في استيراد البيانات' };
+      console.error("Error updating progress:", error);
+      return { success: false, message: 'حدث خطأ أثناء تحديث التقدم' };
     }
   }
 
-  resetUserProgress() {
-    const currentUser = this.getCurrentUser();
+  async deleteAccount() {
+    const currentUser = await this.getCurrentUser();
     if (!currentUser) {
       return { success: false, message: 'المستخدم غير مسجل الدخول' };
     }
 
-    const users = this.getAllUsers();
-    const user = users[currentUser.email];
-    
-    if (!user) {
-      return { success: false, message: 'المستخدم غير موجود' };
+    try {
+      await deleteDoc(doc(this.usersCollectionRef, currentUser.id));
+      this.logout();
+      return { success: true };
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      return { success: false, message: 'حدث خطأ أثناء حذف الحساب' };
     }
-
-    // Reset all progress
-    Object.keys(user.progress).forEach(key => {
-      user.progress[key] = { completed: false, score: 0, completedAt: null };
-    });
-
-    user.totalPoints = 0;
-    user.level = 1;
-
-    users[currentUser.email] = user;
-    this.saveUsers(users);
-    this.setCurrentUser(user);
-
-    return { success: true, user };
-  }
-
-  deleteAccount() {
-    const currentUser = this.getCurrentUser();
-    if (!currentUser) {
-      return { success: false, message: 'المستخدم غير مسجل الدخول' };
-    }
-
-    const users = this.getAllUsers();
-    delete users[currentUser.email];
-    this.saveUsers(users);
-    this.logout();
-
-    return { success: true };
-  }
-
-  getUserStats() {
-    const users = this.getAllUsers();
-    const totalUsers = Object.keys(users).length;
-    
-    let totalCompletions = 0;
-    let totalPoints = 0;
-    
-    Object.values(users).forEach(user => {
-      totalPoints += user.totalPoints;
-      totalCompletions += Object.values(user.progress).filter(p => p.completed).length;
-    });
-
-    return {
-      totalUsers,
-      totalCompletions,
-      totalPoints,
-      averageProgress: totalUsers > 0 ? (totalCompletions / (totalUsers * 10)) * 100 : 0
-    };
   }
 }
 
-// Create singleton instance
 const userManager = new UserManager();
 
 export default userManager;
-

@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Shield, Mail, Lock } from 'lucide-react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Shield, Mail, Lock, XCircle } from 'lucide-react';
+import userManager from './utils/userManager'; 
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = ({ onLoginSuccess }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showErrorDialog, setShowErrorDialog] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    setShowErrorDialog(false);
     setError('');
   };
 
@@ -27,19 +31,29 @@ const LoginPage = ({ onLogin }) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setShowErrorDialog(false);
 
     if (!formData.email || !formData.password) {
       setError('يرجى ملء جميع الحقول');
+      setShowErrorDialog(true);
       setLoading(false);
       return;
     }
 
-    const result = onLogin(formData.email, formData.password);
-    
-    if (!result.success) {
+    // استخدام userManager الجديد مع Firebase
+    const result = await userManager.login(formData.email, formData.password);
+
+    if (result.success) {
+      // قم بتنفيذ وظيفة النجاح إذا كانت موجودة
+      if (onLoginSuccess) {
+        onLoginSuccess(result.user);
+      }
+      navigate('/dashboard');
+    } else {
       setError(result.message);
+      setShowErrorDialog(true);
     }
-    
+
     setLoading(false);
   };
 
@@ -70,12 +84,6 @@ const LoginPage = ({ onLogin }) => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
-
               <div className="space-y-2">
                 <Label htmlFor="email">البريد الإلكتروني</Label>
                 <div className="relative">
@@ -130,7 +138,21 @@ const LoginPage = ({ onLogin }) => {
           </CardContent>
         </Card>
 
-        {/* Demo Account Info */}
+        <Dialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader className="flex items-center space-y-0">
+              <XCircle className="h-10 w-10 text-red-500 mb-2" />
+              <DialogTitle className="text-red-500">حدث خطأ!</DialogTitle>
+              <DialogDescription className="text-center">
+                {error}
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="mt-4">
+              <Button onClick={() => setShowErrorDialog(false)}>حسناً</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
         <Card className="bg-muted/50">
           <CardContent className="pt-6">
             <h3 className="font-semibold text-sm mb-2">حساب تجريبي:</h3>
@@ -149,4 +171,3 @@ const LoginPage = ({ onLogin }) => {
 };
 
 export default LoginPage;
-

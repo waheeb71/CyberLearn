@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Shield, User, Mail, Lock } from 'lucide-react';
+import userManager from './utils/userManager'; 
 
-const RegisterPage = ({ onRegister }) => {
+const RegisterPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,6 +17,7 @@ const RegisterPage = ({ onRegister }) => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -50,13 +51,15 @@ const RegisterPage = ({ onRegister }) => {
       return;
     }
 
-    const result = onRegister({
-      name: formData.name,
-      email: formData.email,
-      password: formData.password
-    });
-    
-    if (!result.success) {
+    const result = await userManager.register(
+      formData.name,
+      formData.email,
+      formData.password
+    );
+
+    if (result.success) {
+      navigate('/dashboard');
+    } else {
       setError(result.message);
     }
     
@@ -199,4 +202,3 @@ const RegisterPage = ({ onRegister }) => {
 };
 
 export default RegisterPage;
-

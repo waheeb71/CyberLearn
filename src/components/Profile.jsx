@@ -11,9 +11,12 @@ import {
   TrendingUp,
   Shield,
   Target,
-
+  Medal,
+  Crown,
+  Gem,
+  Lock
 } from 'lucide-react';
-import { Award, Star, Target, Medal, Crown, Gem, Lock } from 'lucide-react';
+
 
 const Profile = ({ user }) => {
   const sections = [

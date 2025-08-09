@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Trash2, Edit } from 'lucide-react';
-
+import { cn } from "@/lib/utils";
 const PopupManagement = () => {
   const [popups, setPopups] = useState({});
   const [newPopup, setNewPopup] = useState({ message: '', link: '' });

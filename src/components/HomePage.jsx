@@ -1,32 +1,13 @@
-import React, { useState, useEffect } from 'react';
+// src/components/HomePage.jsx
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, BookOpen, Award, Users, Target, Zap } from 'lucide-react';
 import heroImage from '../assets/hero_image.png';
 import rewardsImage from '../assets/rewards_image.png';
-import PopupModal from '../components/PopupModal'; // استيراد مكون النافذة المنبثقة
-import { ref, onValue } from 'firebase/database';
-import { database} from '../utils/firebaseConfig';
+
 const HomePage = ({ currentUser }) => {
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupContent, setPopupContent] = useState(null);
-
-  useEffect(() => {
-    const popupRef = ref(database, 'popup');
-    onValue(popupRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data && data.isActive) {
-        setPopupContent(data);
-        setShowPopup(true);
-      }
-    });
-  }, []);
-
-  const closePopup = () => {
-    setShowPopup(false);
-  };
-
   const features = [
     {
       icon: BookOpen,
@@ -85,15 +66,6 @@ const HomePage = ({ currentUser }) => {
 
   return (
     <div className="min-h-screen">
-      {/* النافذة المنبثقة يتم عرضها هنا بشكل شرطي */}
-      {showPopup && popupContent && (
-        <PopupModal 
-          message={popupContent.message}
-          link={popupContent.link}
-          onClose={closePopup}
-        />
-      )}
-
       {/* Hero Section */}
       <section className="hero-gradient py-20 px-4">
         <div className="max-w-7xl mx-auto">

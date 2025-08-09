@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
@@ -9,7 +10,8 @@ import Dashboard from './components/Dashboard';
 import LearningPath from './components/LearningPath';
 import Profile from './components/Profile';
 import SponsorPage from './components/SponsorPage';
-import AdminPanel from './components/AdminPanel'; // استيراد لوحة التحكم
+import AdminPanel from './components/AdminPanel';
+import PopupSystem from './components/PopupSystem'; // تم استيراد مكون PopupSystem
 
 import userManager from './utils/userManager';
 
@@ -69,14 +71,18 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen bg-background text-foreground">
+        {/* تم إضافة PopupSystem هنا ليتم عرضه فوق جميع محتويات التطبيق */}
+        <PopupSystem />
+        
         <Navbar currentUser={currentUser} onLogout={handleLogout} />
         <Routes>
-        <Route path="/" element={<HomePage currentUser={currentUser} />} />
-         <Route path="/admin-waheebasadprint" element={<AdminPanel />} /> {/* المسار المخفي */}
-         <Route
-  path="/login"
-  element={currentUser ? <Navigate to="/dashboard" /> : <LoginPage onLogin={handleLogin} />}
-/>
+          <Route path="/" element={<HomePage currentUser={currentUser} />} />
+          
+          <Route path="/admin-waheebasadprint" element={<AdminPanel />} />
+          <Route
+            path="/login"
+            element={currentUser ? <Navigate to="/dashboard" /> : <LoginPage onLogin={handleLogin} />}
+          />
           <Route
             path="/register"
             element={currentUser ? <Navigate to="/dashboard" /> : <RegisterPage onRegister={handleRegister} />}

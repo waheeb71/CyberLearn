@@ -81,15 +81,16 @@ const closeModal = () => setShowModal(false);
     <div className="min-h-screen">
        {/* رسالة منبثقة */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-4 text-center shadow-lg">
-            <h3 className="text-xl font-bold mb-4">رسالة تحفيزية</h3>
-            <p className="mb-6 text-lg">{message}</p>
-            <Button onClick={closeModal} className="px-6">
-              أغلق
-            </Button>
-          </div>
-        </div>
+       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-4 text-center shadow-lg">
+    <h3 className="text-xl font-bold mb-4 text-black dark:text-white">رسالة تحفيزية</h3>
+    <p className="mb-6 text-lg text-black dark:text-white">{message}</p>
+    <Button onClick={closeModal} className="px-6">
+      أغلق
+    </Button>
+  </div>
+</div>
+
       )}
       {/* Hero Section */}
       <section className="hero-gradient py-20 px-4">

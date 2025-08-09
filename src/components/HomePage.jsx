@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Shield, BookOpen, Award, Users, Target, Zap } from 'lucide-react';
 import heroImage from '../assets/hero_image.png';
 import rewardsImage from '../assets/rewards_image.png';
-import motivations from 'motivations.json'; 
+import motivations from './motivations.json';
+
 const HomePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [message, setMessage] = useState('');

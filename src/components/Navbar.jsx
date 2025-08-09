@@ -2,9 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Shield, User, LogOut, Home, BookOpen, Award } from 'lucide-react';
-
-import TelegramIcon from './icons/TelegramIcon';
-
+import { TelegramIcon } from './icons/TelegramIcon';
 const Navbar = ({ currentUser, onLogout }) => {
   const location = useLocation();
 

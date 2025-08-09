@@ -99,28 +99,22 @@ class UserManager {
   }
 
   async getCurrentUser() {
-    const currentUserId = localStorage.getItem(this.currentUserKey);
-    if (!currentUserId) {
-      return null;
-    }
-
-    try {
-      const userRef = doc(this.usersCollectionRef, currentUserId);
-      const userSnap = await getDoc(userRef);
-      
-      if (userSnap.exists()) {
-        return userSnap.data();
-      } else {
-        // المستخدم لم يعد موجودًا في قاعدة البيانات، يجب إزالة الجلسة
-        this.logout();
-        return null;
-      }
-    } catch (error) {
-      console.error('Error getting current user:', error);
-      this.logout();
-      return null;
-    }
+  const currentUserId = localStorage.getItem(this.currentUserKey);
+  if (!currentUserId) {
+    return null;
   }
+  // جلب بيانات المستخدم من Firestore
+  const userRef = doc(this.usersCollectionRef, currentUserId);
+  const userSnap = await getDoc(userRef);
+  
+  if (userSnap.exists()) {
+    return userSnap.data();
+  } else {
+    this.logout();
+    return null;
+  }
+}
+
 
   async updateUserProgress(sectionKey, completed, score) {
     const currentUser = await this.getCurrentUser();

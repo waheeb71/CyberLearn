@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
-
-// Import components
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
 import LoginPage from './components/LoginPage';
@@ -11,8 +9,8 @@ import Dashboard from './components/Dashboard';
 import LearningPath from './components/LearningPath';
 import Profile from './components/Profile';
 import SponsorPage from './components/SponsorPage';
+import AdminPanel from './components/AdminPanel'; // استيراد لوحة التحكم
 
-// Import user manager
 import userManager from './utils/userManager';
 
 function App() {
@@ -20,24 +18,32 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const user = userManager.getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
-    }
-    setLoading(false);
+    const fetchUser = async () => {
+      const user = await userManager.getCurrentUser();
+      if (user) setCurrentUser(user);
+      setLoading(false);
+    };
+    fetchUser();
   }, []);
 
-  const handleLogin = (email, password) => {
-    const result = userManager.login(email, password);
+  const handleLogin = async (email, password) => {
+    const result = await userManager.login(email, password);
     if (result.success) {
       setCurrentUser(result.user);
     }
     return result;
   };
 
-  const handleRegister = (userData) => {
-    const result = userManager.register(userData);
+  const handleRegister = async (userData) => {
+    const result = await userManager.register(userData);
+    if (result.success) {
+      setCurrentUser(result.user);
+    }
+    return result;
+  };
+
+  const handleUpdateProgress = async (sectionKey, completed, score) => {
+    const result = await userManager.updateUserProgress(sectionKey, completed, score);
     if (result.success) {
       setCurrentUser(result.user);
     }
@@ -47,14 +53,6 @@ function App() {
   const handleLogout = () => {
     userManager.logout();
     setCurrentUser(null);
-  };
-
-  const handleUpdateProgress = (sectionKey, completed, score) => {
-    const result = userManager.updateUserProgress(sectionKey, completed, score);
-    if (result.success) {
-      setCurrentUser(result.user);
-    }
-    return result;
   };
 
   if (loading) {
@@ -73,38 +71,33 @@ function App() {
       <div className="min-h-screen bg-background text-foreground">
         <Navbar currentUser={currentUser} onLogout={handleLogout} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route 
-            path="/login" 
-            element={
-              currentUser ? <Navigate to="/dashboard" /> : <LoginPage onLogin={handleLogin} />
-            } 
+        <Route path="/" element={<HomePage currentUser={currentUser} />} />
+         <Route path="/admin-waheebasadprint" element={<AdminPanel />} /> {/* المسار المخفي */}
+         <Route
+  path="/login"
+  element={currentUser ? <Navigate to="/dashboard" /> : <LoginPage onLogin={handleLogin} />}
+/>
+          <Route
+            path="/register"
+            element={currentUser ? <Navigate to="/dashboard" /> : <RegisterPage onRegister={handleRegister} />}
           />
-          <Route 
-            path="/register" 
-            element={
-              currentUser ? <Navigate to="/dashboard" /> : <RegisterPage onRegister={handleRegister} />
-            } 
+          <Route
+            path="/dashboard"
+            element={currentUser ? <Dashboard user={currentUser} /> : <Navigate to="/login" />}
           />
-          <Route 
-            path="/dashboard" 
+          <Route
+            path="/learning-path"
             element={
-              currentUser ? <Dashboard user={currentUser} /> : <Navigate to="/login" />
-            } 
-          />
-          <Route 
-            path="/learning-path" 
-            element={
-              currentUser ? 
-                <LearningPath user={currentUser} onUpdateProgress={handleUpdateProgress} /> : 
+              currentUser ? (
+                <LearningPath user={currentUser} onUpdateProgress={handleUpdateProgress} />
+              ) : (
                 <Navigate to="/login" />
-            } 
+              )
+            }
           />
-          <Route 
-            path="/profile" 
-            element={
-              currentUser ? <Profile user={currentUser} /> : <Navigate to="/login" />
-            } 
+          <Route
+            path="/profile"
+            element={currentUser ? <Profile user={currentUser} /> : <Navigate to="/login" />}
           />
           <Route path="/sponsor" element={<SponsorPage />} />
         </Routes>

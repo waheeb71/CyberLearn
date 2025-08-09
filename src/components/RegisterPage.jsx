@@ -51,11 +51,12 @@ const RegisterPage = () => {
       return;
     }
 
-    const result = await userManager.register(
-      formData.name,
-      formData.email,
-      formData.password
-    );
+  const result = await userManager.register({
+  name: formData.name,
+  email: formData.email,
+  password: formData.password
+});
+
 
     if (result.success) {
       navigate('/dashboard');

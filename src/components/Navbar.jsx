@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Shield, User, LogOut, Home, BookOpen, Award, Menu } from 'lucide-react';
+import { Shield, User, LogOut, Home, BookOpen, Award, Menu, X } from 'lucide-react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import userManager from "../utils/userManager";
-
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 
 // SVG Path لأيقونة التلجرام
 const TelegramIcon = ({ className }) => (
@@ -18,31 +17,8 @@ const TelegramIcon = ({ className }) => (
   </svg>
 );
 
-// Navbar component
-const Navbar = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+const Navbar = ({ currentUser, onLogout }) => {
   const location = useLocation();
-  const navigate = useNavigate();
-
-  // Effect to load user state when the component mounts
-  useEffect(() => {
-    const checkUser = async () => {
-      const user = await userManager.getCurrentUser();
-      setCurrentUser(user);
-      setLoading(false);
-    };
-    checkUser();
-    
-    // يمكنك إضافة Listener هنا إذا كنت بحاجة لتحديث فوري
-    // لكن للاستخدام البسيط، هذا يكفي
-  }, []); // يعمل فقط عند تحميل المكون
-
-  const handleLogout = () => {
-    userManager.logout();
-    setCurrentUser(null);
-    navigate('/');
-  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -60,11 +36,10 @@ const Navbar = () => {
     </Link>
   );
 
-  const MobileNavLink = ({ to, icon: Icon, children, onClick }) => (
+  const MobileNavLink = ({ to, icon: Icon, children }) => (
     <DropdownMenuItem asChild>
       <Link
         to={to}
-        onClick={onClick}
         className={`flex items-center space-x-2 rtl:space-x-reverse ${
           isActive(to) ? 'bg-primary text-primary-foreground' : ''
         }`}
@@ -108,10 +83,7 @@ const Navbar = () => {
 
           {/* User Actions */}
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            {loading ? (
-              // يمكنك عرض Loading state هنا
-              <p>...</p>
-            ) : currentUser ? (
+            {currentUser ? (
               <div className="flex items-center space-x-2 rtl:space-x-reverse">
                 <Link to="/profile" className="hidden md:block">
                   <Button variant="ghost" size="sm" className="flex items-center space-x-1 rtl:space-x-reverse">
@@ -122,7 +94,7 @@ const Navbar = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  onClick={handleLogout}
+                  onClick={onLogout}
                   className="hidden md:flex items-center space-x-1 rtl:space-x-reverse"
                 >
                   <LogOut className="h-4 w-4" />
@@ -180,7 +152,7 @@ const Navbar = () => {
                           <span>الملف الشخصي</span>
                         </Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleLogout}>
+                      <DropdownMenuItem onClick={onLogout}>
                         <div className="flex items-center space-x-2 rtl:space-x-reverse w-full">
                           <LogOut className="h-4 w-4" />
                           <span>تسجيل الخروج</span>
@@ -189,8 +161,20 @@ const Navbar = () => {
                     </>
                   ) : (
                     <>
-                      <MobileNavLink to="/login">تسجيل الدخول</MobileNavLink>
-                      <MobileNavLink to="/register">إنشاء حساب</MobileNavLink>
+                      <DropdownMenuItem asChild>
+                        <Link to="/login">
+                          <div className="flex items-center w-full">
+                            <span>تسجيل الدخول</span>
+                          </div>
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/register">
+                          <div className="flex items-center w-full">
+                            <span>إنشاء حساب</span>
+                          </div>
+                        </Link>
+                      </DropdownMenuItem>
                     </>
                   )}
                 </DropdownMenuContent>

@@ -6,10 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Shield, Mail, Lock, XCircle } from 'lucide-react';
-import userManager from "../utils/userManager";
+// لا نحتاج إلى userManager هنا مباشرة، لأننا نستخدم الـ prop onLogin
+// import userManager from "../utils/userManager";
 
-
-const LoginPage = ({ onLoginSuccess }) => {
+const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -17,7 +17,9 @@ const LoginPage = ({ onLoginSuccess }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
-  const navigate = useNavigate();
+
+  // ليس هناك حاجة لاستخدام useNavigate هنا
+  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -41,15 +43,12 @@ const LoginPage = ({ onLoginSuccess }) => {
       return;
     }
 
-    // استخدام userManager الجديد مع Firebase
-    const result = await userManager.login(formData.email, formData.password);
+    // هنا نقوم بتمرير البيانات إلى الدالة onLogin التي تم تمريرها من App.js
+    const result = await onLogin(formData.email, formData.password);
 
     if (result.success) {
-      // قم بتنفيذ وظيفة النجاح إذا كانت موجودة
-      if (onLoginSuccess) {
-        onLoginSuccess(result.user);
-      }
-      navigate('/dashboard');
+      // لا تفعل شيئًا هنا.
+      // App.js سيتولى إعادة التوجيه بشكل تلقائي عند تحديث حالة المستخدم.
     } else {
       setError(result.message);
       setShowErrorDialog(true);

@@ -16,7 +16,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 
-import userManager from './path/to/UserManager'; // تأكد من أن المسار صحيح
+import userManager from './utils/userManager';
 
 const LearningPath = () => {
   const [user, setUser] = useState(null);

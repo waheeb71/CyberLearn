@@ -54,7 +54,7 @@ class UserManager {
 
       await setDoc(userRef, newUser);
       
-      // حفظ معرف المستخدم في localStorage لتتبع الجلسة
+   
       localStorage.setItem(this.currentUserKey, newUser.id);
       
       return { success: true, user: newUser };

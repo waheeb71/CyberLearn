@@ -25,7 +25,8 @@ import {
   Map,
   Lightbulb
 } from 'lucide-react';
-import userManager from './utils/userManager'; 
+import userManager from "../utils/userManager";
+
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -63,16 +64,7 @@ const Dashboard = () => {
     );
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center">
-        <p className="text-xl font-semibold mb-4">يجب عليك تسجيل الدخول لعرض هذه الصفحة.</p>
-        <Link to="/login">
-          <Button>تسجيل الدخول</Button>
-        </Link>
-      </div>
-    );
-  }
+ 
 
   const completedSections = Object.values(user.progress).filter(p => p.completed).length;
   const totalSections = sections.length;

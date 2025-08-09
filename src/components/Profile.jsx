@@ -19,8 +19,8 @@ import {
   Lock,
   BookMarked
 } from 'lucide-react';
+import userManager from "../utils/userManager";
 
-import userManager from './path/to/UserManager'; // تأكد من المسار الصحيح
 
 const Profile = () => {
   const [user, setUser] = useState(null);

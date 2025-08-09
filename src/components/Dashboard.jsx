@@ -26,7 +26,8 @@ import {
   Lightbulb 
 } from 'lucide-react';
 
-import userManager from './utils/userManager';
+import userManager from "../utils/userManager";
+
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Shield, User, Mail, Lock } from 'lucide-react';
-import userManager from './utils/userManager'; 
+import userManager from "../utils/userManager";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({

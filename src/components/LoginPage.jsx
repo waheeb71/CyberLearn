@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Shield, Mail, Lock, XCircle } from 'lucide-react';
-import userManager from './utils/userManager'; 
+import userManager from "../utils/userManager";
+
 
 const LoginPage = ({ onLoginSuccess }) => {
   const [formData, setFormData] = useState({

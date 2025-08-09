@@ -16,7 +16,8 @@ import {
   ChevronDown
 } from 'lucide-react';
 
-import userManager from './utils/userManager';
+import userManager from "../utils/userManager";
+
 
 const LearningPath = () => {
   const [user, setUser] = useState(null);

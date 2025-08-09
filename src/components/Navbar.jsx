@@ -3,7 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Shield, User, LogOut, Home, BookOpen, Award, Menu } from 'lucide-react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import userManager from './utils/userManager'; 
+import userManager from "../utils/userManager";
+
 
 // SVG Path لأيقونة التلجرام
 const TelegramIcon = ({ className }) => (

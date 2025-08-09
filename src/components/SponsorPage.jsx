@@ -2,10 +2,10 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { TelegramIcon } from './components/icons/TelegramIcon';
-import { YouTubeIcon } from './components/icons/YouTubeIcon';
-import { WhatsAppIcon } from './components/icons/WhatsAppIcon';
-import { InstagramIcon } from './components/icons/InstagramIcon';
+import { TelegramIcon } from './icons/TelegramIcon';
+import { YouTubeIcon } from './icons/YouTubeIcon';
+import { WhatsAppIcon } from './icons/WhatsAppIcon';
+import { InstagramIcon } from './icons/InstagramIcon';
 
 import { 
   User, 

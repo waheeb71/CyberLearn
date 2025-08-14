@@ -189,14 +189,15 @@ const RegisterPage = () => {
         </Card>
 
         {/* Terms and Privacy */}
-        <Card className="bg-muted/50">
-          <CardContent className="pt-6">
-            <p className="text-xs text-muted-foreground text-center">
-              بإنشاء حساب، فإنك توافق على استخدام البيانات المحلية في متصفحك لحفظ تقدمك.
-              لا يتم إرسال أي بيانات إلى خوادم خارجية.
-            </p>
-          </CardContent>
-        </Card>
+  <Card className="bg-muted/50">
+  <CardContent className="pt-6">
+    <p className="text-xs text-muted-foreground text-center">
+      بإنشاء حساب، فإنك توافق على إرسال بياناتك إلى خوادمنا لغرض حفظ تقدمك
+      ومزامنته عبر أجهزتك.
+    </p>
+  </CardContent>
+</Card>
+
       </div>
     </div>
   );

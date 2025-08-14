@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Shield, User, LogOut, Home, BookOpen, Award, Menu, X } from 'lucide-react';
+import { Shield, User, LogOut, Home, BookOpen, Award, Menu, X, MessageSquare } from 'lucide-react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-
 // SVG Path لأيقونة التلجرام
 const TelegramIcon = ({ className }) => (
   <svg
@@ -67,6 +66,7 @@ const Navbar = ({ currentUser, onLogout }) => {
               <>
                 <NavLink to="/dashboard" icon={User}>لوحة التحكم</NavLink>
                 <NavLink to="/learning-path" icon={BookOpen}>المسار التعليمي</NavLink>
+                <NavLink to="/posts" icon={MessageSquare}>المنشورات</NavLink>
               </>
             )}
             <NavLink to="/sponsor" icon={Award}>الراعي الرسمي</NavLink>
@@ -128,6 +128,7 @@ const Navbar = ({ currentUser, onLogout }) => {
                       <DropdownMenuSeparator />
                       <MobileNavLink to="/dashboard" icon={User}>لوحة التحكم</MobileNavLink>
                       <MobileNavLink to="/learning-path" icon={BookOpen}>المسار التعليمي</MobileNavLink>
+                      <MobileNavLink to="/posts" icon={MessageSquare}>المنشورات</MobileNavLink>
                     </>
                   )}
                   <DropdownMenuSeparator />

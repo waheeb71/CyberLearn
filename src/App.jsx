@@ -12,9 +12,9 @@ import Profile from './components/Profile';
 import SponsorPage from './components/SponsorPage';
 import AdminPanel from './components/AdminPanel';
 import PopupSystem from './components/PopupSystem'; // تم استيراد مكون PopupSystem
-
 import userManager from './utils/userManager';
-
+import PostsPage from './components/PostsPage';
+import AdminDashboard from './components/AdminDashboard';
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -90,6 +90,18 @@ function App() {
           <Route
             path="/dashboard"
             element={currentUser ? <Dashboard user={currentUser} /> : <Navigate to="/login" />}
+          />
+            <Route 
+            path="/posts" 
+            element={
+              currentUser ? <PostsPage user={currentUser} /> : <Navigate to="/login" />
+            } 
+          />
+            <Route 
+            path="/admin" 
+            element={
+              currentUser ? <AdminDashboard user={currentUser} /> : <Navigate to="/login" />
+            } 
           />
           <Route
             path="/learning-path"

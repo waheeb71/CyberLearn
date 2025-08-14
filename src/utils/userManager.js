@@ -1,7 +1,6 @@
 // UserManager.js
 import { db } from './firebaseConfig'; // استيراد قاعدة البيانات من ملف الإعداد
 import { collection, doc, setDoc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-
 class UserManager {
   constructor() {
     this.usersCollectionRef = collection(db, 'users');
@@ -37,8 +36,9 @@ class UserManager {
         registrationDate: new Date().toISOString(),
         level: 1,
         totalPoints: 0,
+        isAdmin: email === 'rhybmhywb9@gmail.com',
         progress: {
-        
+      
         basics: { completed: false, score: 0, completedAt: null },
         fundamentals: { completed: false, score: 0, completedAt: null },
         specialization: { completed: false, score: 0, completedAt: null },
@@ -63,7 +63,7 @@ class UserManager {
       return { success: false, message: 'حدث خطأ أثناء التسجيل' };
     }
   }
-
+  
   async login(email, password) {
     if (!email || !password) {
       return { success: false, message: 'البريد الإلكتروني وكلمة المرور مطلوبان' };

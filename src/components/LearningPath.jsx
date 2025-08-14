@@ -18,10 +18,49 @@ import {
 
 import userManager from "../utils/userManager";
 
+
+
+const ConfirmationDialog = ({ message, onConfirm, onCancel }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleConfirm = async () => {
+    setLoading(true);
+    await onConfirm(); // يفترض أن تكون دالة async
+    setLoading(false);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="bg-background p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 text-center">
+        <h3 className="text-xl font-bold mb-4">{message}</h3>
+        <div className="flex justify-center space-x-4 rtl:space-x-reverse">
+          <Button
+            onClick={handleConfirm}
+            className="bg-green-600 hover:bg-green-700 text-white flex items-center justify-center"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></span>
+            ) : (
+              "موافق"
+            )}
+          </Button>
+          <Button onClick={onCancel} variant="outline" disabled={loading}>
+            لا
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 const LearningPath = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [expandedSections, setExpandedSections] = useState({});
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [sectionToComplete, setSectionToComplete] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,60 +84,65 @@ const LearningPath = () => {
     }));
   };
 
-  const markAsComplete = async (sectionKey) => {
-    if (user && !user.progress[sectionKey]?.completed) {
-      // السطر الذي تم تصحيحه هنا
-      const result = await userManager.updateUserProgress(sectionKey, true, 10);
+  const handleMarkAsCompleteClick = (sectionKey) => {
+    setSectionToComplete(sectionKey);
+    setShowConfirmDialog(true);
+  };
+
+  const confirmCompletion = async () => {
+    if (user && sectionToComplete && !user.progress[sectionToComplete]?.completed) {
+      const result = await userManager.updateUserProgress(sectionToComplete, true, 10);
       
       if (result.success) {
-        // تحديث حالة المستخدم بالبيانات الجديدة من النتيجة
         setUser(result.user);
       }
     }
+    setShowConfirmDialog(false);
+    setSectionToComplete(null);
+  };
+
+  const cancelCompletion = () => {
+    setShowConfirmDialog(false);
+    setSectionToComplete(null);
   };
 
   const learningContent = {
     basics: {
-      title: '🚀 الأساسيات',
+      title: ' الأساسيات',
       description: 'تعلم أساسيات الشبكات وأنظمة التشغيل والأمن السيبراني',
       items: [
         {
           title: 'أساسيات الشبكات',
           description: 'تعلم كيفية مشاركة الأجهزة للبيانات والاتصال عبر الشبكات',
           links: [
-            { name: 'أساسيات الشبكات - Coursera', url: 'https://www.coursera.org/learn/computer-networking' },
-            { name: 'Practical Networking', url: 'https://www.practicalnetworking.net/' }
+              { name: 'English', url: 'https://youtube.com/playlist?list=PLxCzCOWd7aiGFBD2-2joCpWOLUrDLvVV_&si=siWptZ-LcKzv0rbP' },
+              { name: 'عربي', url: 'https://youtube.com/playlist?list=PL7Gr36YWMQJce2BRY8rqxkygVyBb618iF&si=xnYiDaYwRNN6agAb' }
           ]
         },
         {
-          title: 'أساسيات أنظمة التشغيل',
+              title: 'أساسيات Linux',
           description: 'تعرف على كيفية عمل أنظمة التشغيل، وهو أمر مهم لفهم أمان النظام',
           links: [
-            { name: 'أساسيات أنظمة التشغيل - Udemy', url: 'https://www.udemy.com/course/operating-system-concepts/' }
+            { name: '"Linux for Beginners" (Eng)', url: 'https://youtu.be/sWbUDq4S6Y8?si=UXJ5lpRj9d7phuMj' },
+            { name: '"Linux للمبتدئين" (عربي)', url: 'https://youtube.com/playlist?list=PLEOFNTP51Gte-jhoj0hwbtYaXgW4u7lXu&si=Bwn5FHS4QbjrcqnJ' }
           ]
         },
         {
           title: 'مقدمة في الأمن السيبراني',
           description: 'ابدأ بأساسيات الأمن السيبراني وتعرف على أهميته',
           links: [
-            { name: 'مقدمة في الأمن السيبراني - Cybrary', url: 'https://www.cybrary.it/course/introduction-to-it-and-cybersecurity/' }
+            { name: 'مقدمة في الأمن السيبراني عربي', url: 'https://youtu.be/WiYuS9ft78I?si=KXygtHQPW2GU-v0z' },
+            { name: 'مقدمة في الأمن السيبراني إنجليزي', url: 'https://www.youtube.com/live/-n7iaQVF88A?si=ZNuDW6z0sqIMLSqr' }
           ]
         },
         {
           title: 'شهادة CompTIA Network+',
-          description: 'تغطي هذه الشهادة كل ما تحتاج لمعرفته حول الشبكات',
+          description: "تغطي هذه الشهادة كل ما تحتاج لمعرفته حول الشبكات.\nملاحظة مهمة:\nهذا الكورس مجاني بالكامل وبدون شهادة.\nأما من يرغب في الحصول على شهادة معتمدة، فيمكنه التسجيل في الموقع الرسمي ودفع الرسوم المطلوبة.",
           links: [
-            { name: 'CompTIA Network+ - Cybrary', url: 'https://www.cybrary.it/course/comptia-network-plus/' }
+            { name: 'كورس CompTIA Network+', url: 'https://youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuv&si=18JzC6KWjTxu1TQw' }
           ]
         },
-        {
-          title: 'أساسيات Linux',
-          description: 'تعلم أساسيات Linux، وهو نظام تشغيل شائع في الأمن السيبراني',
-          links: [
-            { name: 'أساسيات Linux - A Cloud Guru', url: 'https://acloudguru.com/course/linux-essentials' },
-            { name: 'OverTheWire Bandit', url: 'https://overthewire.org/wargames/bandit/' }
-          ]
-        }
+        
       ]
     },
     fundamentals: {
@@ -109,7 +153,11 @@ const LearningPath = () => {
           title: 'أساسيات الأمن وأفضل الممارسات',
           description: 'تعلم المبادئ الأساسية للأمن السيبراني وأفضل الممارسات',
           links: [
-            { name: 'أساسيات الأمن السيبراني - Simplilearn', url: 'https://www.simplilearn.com/learn-cyber-security-basics-skillup' }
+              {
+      name: "كورس أساسيات الأمن السيبراني - عربي",
+      url: "https://www.youtube.com/playlist?list=PLh2Jy0nKL_j1WZMzITHgUuzaadpSULlMm"
+    },
+              { name: 'أساسيات الأمن السيبراني - إنجليزي', url: 'https://www.simplilearn.com/learn-cyber-security-basics-skillup' }
           ]
         },
         {
@@ -466,7 +514,7 @@ const LearningPath = () => {
                       <div className="pt-4 border-t">
                         {!isCompleted ? (
                           <Button 
-                            onClick={() => markAsComplete(sectionKey)}
+                            onClick={() => handleMarkAsCompleteClick(sectionKey)}
                             className="w-full sm:w-auto"
                           >
                             <Award className="h-4 w-4 ml-2" />
@@ -505,6 +553,14 @@ const LearningPath = () => {
           </Card>
         )}
       </div>
+
+      {showConfirmDialog && (
+        <ConfirmationDialog
+          message="هل أنت متأكد من أنك أكملت كل شيء في هذا القسم؟"
+          onConfirm={confirmCompletion}
+          onCancel={cancelCompletion}
+        />
+      )}
     </div>
   );
 };

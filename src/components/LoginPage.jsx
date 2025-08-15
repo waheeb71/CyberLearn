@@ -9,6 +9,8 @@ import { Shield, Mail, Lock, XCircle } from 'lucide-react';
 // لا نحتاج إلى userManager هنا مباشرة، لأننا نستخدم الـ prop onLogin
 // import userManager from "../utils/userManager";
 
+import { ReactTyped } from "react-typed";
+
 const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -152,19 +154,27 @@ const LoginPage = ({ onLogin }) => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+<Card className="bg-muted/50">
+  <CardContent className="pt-1">
+    <h3 className="font-semibold text-lg text-center mb-3 w-full">💡 تذكر:</h3>
+    <p className="text-xl font-bold text-primary leading-relaxed text-center">
+      <ReactTyped
+        strings={[
+          "رحلة الألف ميل تبدأ بخطوة.",
+          "كل يوم تتعلم فيه، أنت تتطور.",
+          "الفشل هو خطوة نحو النجاح.",
+          "المعرفة قوة، والبحث مفتاحها.",
+          "تعلم شيئًا جديدًا كل يوم."
+        ]}
+        typeSpeed={70}
+        backSpeed={40}
+        backDelay={1500}
+        loop
+      />
+    </p>
+  </CardContent>
+</Card>
 
-        <Card className="bg-muted/50">
-          <CardContent className="pt-6">
-            <h3 className="font-semibold text-sm mb-2">حساب تجريبي:</h3>
-            <p className="text-xs text-muted-foreground mb-2">
-              يمكنك إنشاء حساب جديد أو استخدام البيانات التالية للتجربة:
-            </p>
-            <div className="text-xs space-y-1">
-              <p><strong>البريد:</strong> demo@example.com</p>
-              <p><strong>كلمة المرور:</strong> demo123</p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

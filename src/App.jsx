@@ -10,11 +10,14 @@ import Dashboard from './components/Dashboard';
 import LearningPath from './components/LearningPath';
 import Profile from './components/Profile';
 import SponsorPage from './components/SponsorPage';
+import Hosam from './components/hosam';
+import Asad from './components/asad';
 import AdminPanel from './components/AdminPanel';
 import PopupSystem from './components/PopupSystem'; // تم استيراد مكون PopupSystem
 import userManager from './utils/userManager';
 import PostsPage from './components/PostsPage';
 import AdminDashboard from './components/AdminDashboard';
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -103,6 +106,7 @@ function App() {
               currentUser ? <AdminDashboard user={currentUser} /> : <Navigate to="/login" />
             } 
           />
+ 
           <Route
             path="/learning-path"
             element={
@@ -118,6 +122,8 @@ function App() {
             element={currentUser ? <Profile user={currentUser} /> : <Navigate to="/login" />}
           />
           <Route path="/sponsor" element={<SponsorPage />} />
+          <Route path="/sponsor2" element={<Hosam />} />
+          <Route path="/asad" element={<Asad />} />
         </Routes>
       </div>
     </Router>

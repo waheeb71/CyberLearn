@@ -200,8 +200,8 @@ const LearningPath = () => {
           title: 'اختبار الاختراق',
           description: 'تعلم كيفية اختبار أمان الأنظمة والتطبيقات',
           links: [
-            { name: 'Certified Ethical Hacker (CEH)', url: 'https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/' },
-            { name: 'Offensive Security Certified Professional (OSCP)', url: 'https://www.offensive-security.com/certification/oscp/' }
+            { name: 'Certified Ethical Hacker (CEH)', url: 'https://t.me/c_yber_r/44' },
+            { name: 'Offensive Security Certified Professional (OSCP)', url: 'https://t.me/c_yber_r/2' }
           ]
         },
         {

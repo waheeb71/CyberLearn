@@ -16,55 +16,44 @@ import {
   Globe,
   Award,
   Code,
-  Shield,
-  Heart
+  Brush, 
+  LayoutPanelLeft
 } from 'lucide-react';
 
-const SponsorPage = () => {
+const Asad = () => {
 const socialLinks = [
-  { name: 'Gmail', icon: Mail, url: 'mailto:rhybmhywb9@gmail.com', description: 'تواصل معي مباشرة عبر البريد الإلكتروني' },
-  { name: 'Telegram', icon: TelegramIcon, url: 'https://t.me/WAT4F', description: 'تابعني على تليجرام' },
-  { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/wa__cys', description: 'تابع آخر التحديثات والأفكار' },
-  { name: 'LinkedIn', icon: Linkedin, url: 'https://linkedin.com/in/waheeb71', description: 'تواصل معي مهنياً' },
-  { name: 'YouTube', icon: YouTubeIcon, url: 'https://www.youtube.com/@cyber_code1/', description: 'شاهد فيديوهاتي التعليمية' },
-  { name: 'WhatsApp', icon: WhatsAppIcon, url: 'https://wa.me/967738695139', description: 'تواصل معي عبر واتساب' },
-  { name: 'Instagram', icon: InstagramIcon, url: 'https://instagram.com/wa_20_cys', description: 'تابعني على انستجرام' }
+  { name: 'Gmail', icon: Mail, url: 'mailto:asadbinah@gmail.com', description: 'تواصل معي مباشرة عبر البريد الإلكتروني' },
+  { name: 'Github', icon: Github, url: 'https://github.com/asadbinah', description: 'تابع مشاريعي على GitHub' },
+  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/asadbinah', description: 'تواصل معي على LinkedIn' },
+  { name: 'Twitter', icon: Twitter, url: 'https://twitter.com/asadbinah', description: 'تابعني على تويتر' }
 ];
 
-
-
- const skills = [
-  'الأمن السيبراني',
-  'تطوير الويب',
-  'البرمجة',
-  'إدارة المشاريع',
-  'التعلم الذاتي',
-  'الذكاء الاصطناعي'
+const skills = [
+  'تطوير الواجهات الأمامية (Frontend)',
+  'تصميم واجهات المستخدم (UI Design)',
+  'React.js',
+  'Tailwind CSS',
+  'Figma',
+  'إدارة المشاريع'
 ];
 
 const achievements = [
   {
-    title: 'ذو خبرة في الأمن السيبراني',
-    description: 'أتابع التعلم وأطور مهاراتي في هذا المجال باستمرار',
-    icon: Shield
+    title: 'خبير في تصميم الواجهات',
+    description: 'تصميم واجهات مستخدم جذابة وتجربة مستخدم سلسة',
+    icon: Brush
   },
   {
-    title: 'مطور برمجيات',
-    description: 'تصميم وتطوير حلول تقنية مبتكرة',
+    title: 'مطور واجهات أمامية',
+    description: 'بناء مكونات تفاعلية باستخدام أحدث التقنيات',
     icon: Code
   },
   {
-    title: 'معلم ومرشد',
-    description: 'دعم ومساعدة العديد من الطلاب في مسيرتهم التعليمية',
+    title: 'مساهم في مجتمع المصممين',
+    description: 'مشاركة المعرفة والخبرات في مجال التصميم',
     icon: Award
   }
 ];
- const contributors = [
-     { name: "حسام الفلاحي", profileUrl: "/sponsor2" },
-    { name: "اسد بنه", profileUrl: "/asad" },
-
-  ];
-
 
   return (
     <div className="min-h-screen bg-background py-12 px-4">
@@ -77,34 +66,15 @@ const achievements = [
             </div>
           </div>
           <h1 className="text-4xl font-bold text-foreground mb-4">
-            وهيب الشرعبي
+            أسد بنه
           </h1>
           <p className="text-xl text-muted-foreground mb-6">
-            الراعي الرسمي لمنصة تعلم الأمن السيبراني
+            مساهم ومطور واجهات أمامية (Frontend Developer)
           </p>
           <Badge className="text-lg px-4 py-2 bg-primary/10 text-primary border-primary">
-            <Heart className="w-4 h-4 ml-2" />
-            شكراً لدعمك المستمر
+            <LayoutPanelLeft className="w-4 h-4 ml-2" />
+            محب لتصميم وتطوير الواجهات الجميلة
           </Badge>
-
-          <Card className="bg-muted/50 mt-4">
-  <CardContent className="pt-4">
-    <h3 className="font-semibold text-sm mb-3">المساهمون</h3>
-    <div className="flex justify-center gap-4">
-      {contributors.map((contributor, index) => (
-        <a
-          key={index}
-          href={contributor.profileUrl}
-          className="flex items-center gap-2 hover:bg-muted p-2 rounded transition"
-        >
-          <User className="w-5 h-5 text-primary" />
-          <span className="text-sm font-medium">{contributor.name}</span>
-        </a>
-      ))}
-    </div>
-  </CardContent>
-</Card>
-
         </div>
 
         {/* About Section */}
@@ -117,13 +87,13 @@ const achievements = [
           </CardHeader>
           <CardContent>
           <p className="text-lg leading-relaxed text-muted-foreground mb-6">
-مرحباً! أنا وهيب الشرعبي، متخصص في الأمن السيبراني وتطوير البرمجيات والذكاء الاصطناعي.
-أؤمن بأهمية التعليم ومشاركة المعرفة مع المجتمع التقني.
-أنشأت هذه المنصة لتكون مساراً تعليمياً شاملاً ومجانياً لكل من يرغب في تعلم الأمن السيبراني.
+أهلاً! أنا أسد بنه، متخصص في تطوير الواجهات الأمامية وتصميم تجارب المستخدم (UX/UI).
+أؤمن بقوة التصميم في خلق تجارب رقمية لا تُنسى.
+أسعى للمساهمة في بناء واجهات جذابة وعملية لهذه المنصة.
 </p>
 
-           <p className="text-lg leading-relaxed text-muted-foreground">
-أسعى لمشاركة معرفتي بالأمن السيبراني والذكاء الاصطناعي لتمكين الجيل القادم من حماية عالمنا الرقمي.
+          <p className="text-lg leading-relaxed text-muted-foreground">
+هدفي هو تحويل الأفكار إلى واجهات أمامية ملموسة وجميلة.
 </p>
 
           </CardContent>
@@ -208,14 +178,14 @@ const achievements = [
           <CardContent className="pt-6">
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-4">
-                شكراً لك على دعم التعليم المجاني
+                شكراً لدعمكم المتواصل
               </h2>
               <p className="text-lg mb-6 opacity-90">
-                بفضل دعمكم، نستطيع توفير محتوى تعليمي عالي الجودة مجاناً للجميع
+                دعونا نصنع معاً تجربة رقمية استثنائية!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="https://github.com/waheeb71"
+                  href="https://github.com/asadbinah"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -225,19 +195,19 @@ const achievements = [
                   </Button>
                 </a>
                <a
-  href="https://t.me/SyberSc71"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <Button
-    size="lg"
-    variant="outline"
-    className="w-full sm:w-auto border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-  >
-    <TelegramIcon className="h-5 w-5 ml-2" />
-  قناه لتليجرام
-  </Button>
-</a>
+                  href="https://www.linkedin.com/in/asadbinah"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full sm:w-auto border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                  >
+                    <Linkedin className="h-5 w-5 ml-2" />
+                    تواصل معي على LinkedIn
+                  </Button>
+                </a>
 
               </div>
             </div>
@@ -247,7 +217,7 @@ const achievements = [
         {/* Footer Message */}
         <div className="text-center mt-12">
           <p className="text-muted-foreground">
-            التعليم هو أقوى سلاح يمكن استخدامه لتغيير العالم
+            التصميم الجيد يمنح تجربة مستخدم أفضل
           </p>
         </div>
       </div>
@@ -255,5 +225,4 @@ const achievements = [
   );
 };
 
-export default SponsorPage;
-
+export default Asad;

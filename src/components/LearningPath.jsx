@@ -18,6 +18,7 @@ import {
 
 import userManager from "../utils/userManager";
 
+import { Helmet } from "react-helmet";
 
 
 const ConfirmationDialog = ({ message, onConfirm, onCancel }) => {
@@ -30,6 +31,7 @@ const ConfirmationDialog = ({ message, onConfirm, onCancel }) => {
   };
 
   return (
+
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="bg-background p-6 rounded-lg shadow-lg max-w-sm w-full mx-4 text-center">
         <h3 className="text-xl font-bold mb-4">{message}</h3>
@@ -410,11 +412,37 @@ const LearningPath = () => {
   const overallProgress = (completedSections / totalSections) * 100;
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-4">
+    <>
+      <Helmet>
+        <title>مسار تعلم الأمن السيبراني الشامل</title>
+        <meta name="description" content="ابدأ رحلتك في تعلم الأمن السيبراني من الصفر حتى الاحتراف" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
+
+  
+  <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
+  <meta name="author" content="waheeb al_sharabi" />
+
+
+  <meta property="og:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta property="og:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta property="og:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <meta property="og:url" content="https://cyberlearn0.netlify.app" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
+      </Helmet>
+      <div className="min-h-screen bg-background py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-foreground mb-4">
             مسار تعلم الأمن السيبراني الشامل
           </h1>
           <p className="text-muted-foreground mb-6">
@@ -562,6 +590,7 @@ const LearningPath = () => {
         />
       )}
     </div>
+     </>
   );
 };
 

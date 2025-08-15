@@ -7,7 +7,24 @@ import { Shield, BookOpen, Award, Users, Target, Zap } from 'lucide-react';
 import heroImage from '../assets/hero_image.png';
 import rewardsImage from '../assets/rewards_image.png';
 import { Helmet } from "react-helmet";
+function AdsenseAd() {
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
+  return (
+    <ins className="adsbygoogle"
+         style={{ display: "block" }}
+         data-ad-client="ca-pub-2404732748519909"
+         data-ad-slot="4015760802"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  );
+}
 const HomePage = ({ currentUser }) => {
   const features = [
     {
@@ -112,6 +129,11 @@ const HomePage = ({ currentUser }) => {
                 ابدأ رحلتك في عالم الأمن السيبراني مع مسار تعليمي شامل ومنظم. 
                 من الأساسيات إلى التخصصات المتقدمة، كل ما تحتاجه في مكان واحد.
               </p>
+              <section>
+  <h2>إعلان</h2>
+  <AdsenseAd />
+</section>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 {currentUser ? (
                   <>

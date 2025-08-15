@@ -1,5 +1,5 @@
 // src/components/HomePage.jsx
-import React from 'react';
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +7,8 @@ import { Shield, BookOpen, Award, Users, Target, Zap } from 'lucide-react';
 import heroImage from '../assets/hero_image.png';
 import rewardsImage from '../assets/rewards_image.png';
 import { Helmet } from "react-helmet";
+
+
 function AdsenseAd() {
   useEffect(() => {
     try {
@@ -109,10 +111,7 @@ const HomePage = ({ currentUser }) => {
   <meta name="twitter:title" content="مسار تعلم الأمن السيبراني الشامل" />
   <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
   <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
-  <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DceR2g50.css"></link>
+
 </Helmet>
 
     <div className="min-h-screen">
@@ -130,7 +129,6 @@ const HomePage = ({ currentUser }) => {
                 من الأساسيات إلى التخصصات المتقدمة، كل ما تحتاجه في مكان واحد.
               </p>
               <section>
-  <h2>إعلان</h2>
   <AdsenseAd />
 </section>
 

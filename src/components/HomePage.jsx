@@ -91,8 +91,7 @@ const HomePage = ({ currentUser }) => {
 
 <link rel="icon" type="image/png" sizes="32x32" href="https://cyberlearn0.netlify.app/og-image.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="https://cyberlearn0.netlify.app/og-image.png" />
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2404732748519909"
-     crossorigin="anonymous"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
   <title>مسار تعلم الأمن السيبراني الشامل</title>

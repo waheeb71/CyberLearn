@@ -85,7 +85,7 @@ const LoginPage = ({ onLogin }) => {
   <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
   <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
 
-  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
+  
       </Helmet>
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-md w-full space-y-8">

@@ -119,7 +119,7 @@ const Dashboard = () => {
   <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
   <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
   
-  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
+
       </Helmet>
 
     <div className="min-h-screen bg-background py-8 px-4">

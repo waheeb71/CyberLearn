@@ -33,7 +33,7 @@ function App() {
     };
     fetchUser();
   }, []);
-
+/*
   // ===== تحميل سكربت AdSense بطريقة آمنة =====
   useEffect(() => {
     const script = document.createElement('script');
@@ -44,7 +44,7 @@ function App() {
 
     (window.adsbygoogle = window.adsbygoogle || []).push({});
   }, []);
-
+*/
   // ===== Handlers =====
   const handleLogin = async (email, password) => {
     const result = await userManager.login(email, password);

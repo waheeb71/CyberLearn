@@ -362,8 +362,7 @@ const [loadingReplies, setLoadingReplies] = useState({});
   <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
   <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
   <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
+
       </Helmet>
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">

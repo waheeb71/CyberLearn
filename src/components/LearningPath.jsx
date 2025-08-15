@@ -436,7 +436,7 @@ const LearningPath = () => {
   <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
   <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
  
-  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
+  
       </Helmet>
       <div className="min-h-screen bg-background py-8 px-4">
         <div className="max-w-4xl mx-auto">

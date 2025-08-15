@@ -10,6 +10,7 @@ import { Shield, Mail, Lock, XCircle } from 'lucide-react';
 // import userManager from "../utils/userManager";
 
 import { ReactTyped } from "react-typed";
+import { Helmet } from "react-helmet";
 
 const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
@@ -60,6 +61,32 @@ const LoginPage = ({ onLogin }) => {
   };
 
   return (
+      <>
+      <Helmet>
+        <title>تسجيل الدخول - الأمن السيبراني</title>
+        <meta name="description" content="تسجيل الدخول إلى حسابك في منصة الأمن السيبراني" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
+ 
+  <meta name="description" content="ابدأ رحلتك في تعلم الأمن السيبراني من الصفر حتى الاحتراف، مع خطة منظمة وموارد تعليمية عالية الجودة موجهة للطلاب والمهتمين بالمجال." />
+  <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
+  <meta name="author" content="waheeb al_sharabi" />
+
+
+  <meta property="og:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta property="og:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta property="og:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <meta property="og:url" content="https://cyberlearn0.netlify.app" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
+      </Helmet>
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
@@ -177,6 +204,7 @@ const LoginPage = ({ onLogin }) => {
 
       </div>
     </div>
+     </>
   );
 };
 

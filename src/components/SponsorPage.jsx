@@ -6,6 +6,7 @@ import { TelegramIcon } from './icons/TelegramIcon';
 import { YouTubeIcon } from './icons/YouTubeIcon';
 import { WhatsAppIcon } from './icons/WhatsAppIcon';
 import { InstagramIcon } from './icons/InstagramIcon';
+import { Helmet } from "react-helmet";
 
 import { 
   User, 
@@ -67,6 +68,12 @@ const achievements = [
 
 
   return (
+    <>
+      <Helmet>
+        <title>صفحة الراعي - الأمن السيبراني</title>
+        <meta name="description" content="استعرض معلومات الراعي الرسمي لمنصة تعلم الأمن السيبراني." />
+        <meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
+      </Helmet>
     <div className="min-h-screen bg-background py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -252,6 +259,7 @@ const achievements = [
         </div>
       </div>
     </div>
+     </>
   );
 };
 

@@ -20,6 +20,7 @@ import {
   BookMarked
 } from 'lucide-react';
 import userManager from "../utils/userManager";
+import { Helmet } from "react-helmet";
 
 
 const Profile = () => {
@@ -124,6 +125,12 @@ const Profile = () => {
   const achievements = getAchievements();
 
   return (
+      <>
+      <Helmet>
+        <title>ملف التعريف - الأمن السيبراني</title>
+        <meta name="description" content="استعرض ملفك الشخصي وتقدمك في مسار تعلم الأمن السيبراني." />
+        <meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
+      </Helmet>
     <div className="min-h-screen bg-background py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
@@ -287,6 +294,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
+     </>
   );
 };
 

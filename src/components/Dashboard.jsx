@@ -25,7 +25,7 @@ import {
   Map, 
   Lightbulb 
 } from 'lucide-react';
-
+import AdsenseAd from "./AdsenseAd";
 import userManager from "../utils/userManager";
 import { Helmet } from "react-helmet";
 
@@ -134,6 +134,10 @@ const Dashboard = () => {
             تابع تقدمك في مسار تعلم الأمن السيبراني
           </p>
         </div>
+<div>
+     
+      <AdsenseAd />
+    </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

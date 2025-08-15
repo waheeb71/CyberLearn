@@ -123,6 +123,7 @@ function App() {
             <Route path="/sponsor" element={<SponsorPage />} />
             <Route path="/sponsor2" element={<Hosam />} />
             <Route path="/asad" element={<Asad />} />
+             <Route path="/ads" element={< ads.txt/>} />
           </Routes>
         </div>
       </Router>

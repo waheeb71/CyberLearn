@@ -17,7 +17,7 @@ import PopupSystem from './components/PopupSystem'; // تم استيراد مك�
 import userManager from './utils/userManager';
 import PostsPage from './components/PostsPage';
 import AdminDashboard from './components/AdminDashboard';
-
+import { Helmet } from "react-helmet";
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -72,6 +72,32 @@ function App() {
   }
 
   return (
+    <>
+      <Helmet>
+        <title>مسار تعلم الأمن السيبراني الشامل</title>
+       
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
+
+  <meta name="description" content="ابدأ رحلتك في تعلم الأمن السيبراني من الصفر حتى الاحتراف، مع خطة منظمة وموارد تعليمية عالية الجودة موجهة للطلاب والمهتمين بالمجال." />
+  <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
+  <meta name="author" content="waheeb al_sharabi" />
+
+
+  <meta property="og:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta property="og:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta property="og:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <meta property="og:url" content="https://cyberlearn0.netlify.app" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+ 
+      </Helmet>
     <Router>
       <div className="min-h-screen bg-background text-foreground">
         {/* تم إضافة PopupSystem هنا ليتم عرضه فوق جميع محتويات التطبيق */}
@@ -127,6 +153,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+     </>
   );
 }
 

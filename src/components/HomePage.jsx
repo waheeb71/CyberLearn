@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Shield, BookOpen, Award, Users, Target, Zap } from 'lucide-react';
 import heroImage from '../assets/hero_image.png';
 import rewardsImage from '../assets/rewards_image.png';
+import { Helmet } from "react-helmet";
 
 const HomePage = ({ currentUser }) => {
   const features = [
@@ -65,6 +66,37 @@ const HomePage = ({ currentUser }) => {
   ];
 
   return (
+      <>
+    <Helmet>
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="/og-image.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/og-image.png" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>مسار تعلم الأمن السيبراني الشامل</title>
+  <meta name="description" content="ابدأ رحلتك في تعلم الأمن السيبراني من الصفر حتى الاحتراف، مع خطة منظمة وموارد تعليمية عالية الجودة موجهة للطلاب والمهتمين بالمجال." />
+  <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
+  <meta name="author" content="waheeb al_sharabi" />
+
+
+  <meta property="og:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta property="og:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta property="og:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <meta property="og:url" content="https://cyberlearn0.netlify.app" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="مسار تعلم الأمن السيبراني الشامل" />
+  <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
+  <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
+  <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script type="module" crossorigin src="/assets/index-rqsdKoJT.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DceR2g50.css"></link>
+</Helmet>
+
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="hero-gradient py-20 px-4">
@@ -288,7 +320,9 @@ const HomePage = ({ currentUser }) => {
         </div>
       </section>
     </div>
+      </>
   );
+
 };
 
 export default HomePage;

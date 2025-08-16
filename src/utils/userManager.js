@@ -36,7 +36,7 @@ class UserManager {
         registrationDate: new Date().toISOString(),
         level: 1,
         totalPoints: 0,
-        isAdmin: email === 'rhybmhywb9@gmail.com',
+        isAdmin: email === 'waheebamoonh@gmail.com',
         progress: {
       
         basics: { completed: false, score: 0, completedAt: null },

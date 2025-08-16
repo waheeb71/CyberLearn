@@ -6,6 +6,7 @@ class UserManager {
     this.usersCollectionRef = collection(db, 'users');
     this.currentUserKey = 'cyberlearn_current_user_id';
   }
+  
 
   async register(userData) {
     const { name, email, password } = userData;

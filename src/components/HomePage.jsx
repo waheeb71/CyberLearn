@@ -1,5 +1,5 @@
 // src/components/HomePage.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +7,10 @@ import { Shield, BookOpen, Award, Users, Target, Zap } from 'lucide-react';
 import heroImage from '../assets/hero_image.png';
 import rewardsImage from '../assets/rewards_image.png';
 import { Helmet } from "react-helmet";
+import { getUsersCount } from "../utils/usersCount";
+import { trackVisitor, getVisitorsCount } from "../utils/visitorsCount";
+import FloatingStats from "@/components/FloatingStats";
+
 
 
 function AdsenseAd() {
@@ -28,6 +32,34 @@ function AdsenseAd() {
   );
 }
 const HomePage = ({ currentUser }) => {
+   
+
+  const [usersCount, setUsersCount] = useState(0);
+  const [visitorsCount, setVisitorsCount] = useState(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // جلب عدد المستخدمين
+        const users = await getUsersCount();
+        setUsersCount(users);
+
+        // تسجيل الزائر الحالي
+        await trackVisitor();
+
+        // جلب عدد الزوار
+        const visitors = await getVisitorsCount();
+        setVisitorsCount(visitors);
+      } catch (error) {
+        console.error("خطأ أثناء جلب الإحصائيات:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+
+  
   const features = [
     {
       icon: BookOpen,
@@ -93,6 +125,7 @@ const HomePage = ({ currentUser }) => {
 <link rel="icon" type="image/png" sizes="16x16" href="https://cyberlearn0.netlify.app/og-image.png" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
   <title>مسار تعلم الأمن السيبراني الشامل</title>
   <meta name="description" content="ابدأ رحلتك في تعلم الأمن السيبراني من الصفر حتى الاحتراف، مع خطة منظمة وموارد تعليمية عالية الجودة موجهة للطلاب والمهتمين بالمجال." />
@@ -114,6 +147,7 @@ const HomePage = ({ currentUser }) => {
 </Helmet>
 
     <div className="min-h-screen">
+   
       {/* Hero Section */}
       <section className="hero-gradient py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -303,6 +337,7 @@ const HomePage = ({ currentUser }) => {
               <p className="text-xl mb-8 opacity-90">
                 انضم إلى آلاف المتعلمين الذين بدأوا رحلتهم معنا وحققوا أهدافهم المهنية
               </p>
+              
             </>
           )}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -337,6 +372,11 @@ const HomePage = ({ currentUser }) => {
               </Button>
             </Link>
           </div>
+
+          <div>
+      {/* باقي الصفحة */}
+      <FloatingStats usersCount={usersCount} visitorsCount={visitorsCount} />
+    </div>
         </div>
       </section>
     </div>

@@ -1,4 +1,4 @@
-// Posts Management System using Firebase
+// Enhanced Posts Management System with Edit/Delete functionality
 import { db } from './firebaseConfig';
 import {
   collection,
@@ -20,7 +20,7 @@ import {
 // استيراد مدير المستخدمين للوصول إلى بيانات المستخدم الحالي
 import userManager from './userManager';
 
-class PostsManager {
+class EnhancedPostsManager {
   constructor() {
     this.postsCollectionRef = collection(db, 'posts');
     this.platformPostsCollectionRef = collection(db, 'platformPosts');
@@ -33,7 +33,6 @@ class PostsManager {
   }
 
   // Create a new post
-  // الآن لا تحتاج لتمرير authorId و authorName
   async createPost(content, isPlatformPost = false) {
     const currentUser = await userManager.getCurrentUser();
     if (!currentUser) {
@@ -72,6 +71,178 @@ class PostsManager {
     } catch (error) {
       console.error("Error creating post:", error);
       return { success: false, message: 'حدث خطأ أثناء إنشاء المنشور' };
+    }
+  }
+
+  // Edit a post
+  async editPost(postId, newContent, isPlatformPost = false) {
+    const currentUser = await userManager.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, message: 'يجب تسجيل الدخول لتعديل المنشور' };
+    }
+
+    if (!newContent || newContent.trim().length === 0) {
+      return { success: false, message: 'لا يمكن حفظ منشور فارغ' };
+    }
+
+    try {
+      const collectionRef = isPlatformPost ? this.platformPostsCollectionRef : this.postsCollectionRef;
+      const postRef = doc(collectionRef, postId);
+      const postSnap = await getDoc(postRef);
+
+      if (!postSnap.exists()) {
+        return { success: false, message: 'المنشور غير موجود' };
+      }
+
+      const postData = postSnap.data();
+
+      // Check if user is the author or admin
+      if (postData.authorId !== currentUser.id && !currentUser.isAdmin) {
+        return { success: false, message: 'ليس لديك صلاحية لتعديل هذا المنشور' };
+      }
+
+      // Check time limit for editing (24 hours for regular users, unlimited for admins)
+      if (!currentUser.isAdmin) {
+        const postDate = postData.createdAt?.toDate?.() || new Date(postData.createdAt);
+        const now = new Date();
+        const hoursDiff = (now - postDate) / (1000 * 60 * 60);
+        
+        if (hoursDiff > 24) {
+          return { success: false, message: 'انتهت مدة التعديل المسموحة (24 ساعة)' };
+        }
+      }
+
+      await updateDoc(postRef, {
+        content: newContent.trim(),
+        updatedAt: serverTimestamp()
+      });
+
+      return {
+        success: true,
+        message: 'تم تحديث المنشور بنجاح'
+      };
+    } catch (error) {
+      console.error("Error editing post:", error);
+      return { success: false, message: 'حدث خطأ أثناء تعديل المنشور' };
+    }
+  }
+
+  // Edit a reply
+  async editReply(postId, replyId, newContent, isPlatformPost = false) {
+    const currentUser = await userManager.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, message: 'يجب تسجيل الدخول لتعديل الرد' };
+    }
+
+    if (!newContent || newContent.trim().length === 0) {
+      return { success: false, message: 'لا يمكن حفظ رد فارغ' };
+    }
+
+    try {
+      const collectionRef = isPlatformPost ? this.platformPostsCollectionRef : this.postsCollectionRef;
+      const postRef = doc(collectionRef, postId);
+      const postSnap = await getDoc(postRef);
+
+      if (!postSnap.exists()) {
+        return { success: false, message: 'المنشور غير موجود' };
+      }
+
+      const postData = postSnap.data();
+      const replies = postData.replies || [];
+      const replyIndex = replies.findIndex(reply => reply.id === replyId);
+
+      if (replyIndex === -1) {
+        return { success: false, message: 'الرد غير موجود' };
+      }
+
+      const reply = replies[replyIndex];
+
+      // Check if user is the author or admin
+      if (reply.authorId !== currentUser.id && !currentUser.isAdmin) {
+        return { success: false, message: 'ليس لديك صلاحية لتعديل هذا الرد' };
+      }
+
+      // Check time limit for editing (2 hours for regular users, unlimited for admins)
+      if (!currentUser.isAdmin) {
+        const replyDate = new Date(reply.createdAt);
+        const now = new Date();
+        const hoursDiff = (now - replyDate) / (1000 * 60 * 60);
+        
+        if (hoursDiff > 2) {
+          return { success: false, message: 'انتهت مدة التعديل المسموحة للرد (2 ساعة)' };
+        }
+      }
+
+      // Update the reply
+      const updatedReplies = [...replies];
+      updatedReplies[replyIndex] = {
+        ...reply,
+        content: newContent.trim(),
+        formattedContent: this.formatTextWithLinks(newContent.trim()),
+        updatedAt: new Date()
+      };
+
+      await updateDoc(postRef, {
+        replies: updatedReplies,
+        updatedAt: serverTimestamp()
+      });
+
+      return {
+        success: true,
+        message: 'تم تحديث الرد بنجاح'
+      };
+    } catch (error) {
+      console.error("Error editing reply:", error);
+      return { success: false, message: 'حدث خطأ أثناء تعديل الرد' };
+    }
+  }
+
+  // Delete a reply
+  async deleteReply(postId, replyId, isPlatformPost = false) {
+    const currentUser = await userManager.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, message: 'يجب تسجيل الدخول لحذف الرد' };
+    }
+
+    try {
+      const collectionRef = isPlatformPost ? this.platformPostsCollectionRef : this.postsCollectionRef;
+      const postRef = doc(collectionRef, postId);
+      const postSnap = await getDoc(postRef);
+
+      if (!postSnap.exists()) {
+        return { success: false, message: 'المنشور غير موجود' };
+      }
+
+      const postData = postSnap.data();
+      const replies = postData.replies || [];
+      const replyIndex = replies.findIndex(reply => reply.id === replyId);
+
+      if (replyIndex === -1) {
+        return { success: false, message: 'الرد غير موجود' };
+      }
+
+      const reply = replies[replyIndex];
+
+      // Check if user is the author or admin
+      if (reply.authorId !== currentUser.id && !currentUser.isAdmin) {
+        return { success: false, message: 'ليس لديك صلاحية لحذف هذا الرد' };
+      }
+
+      // Remove the reply
+      const updatedReplies = replies.filter(r => r.id !== replyId);
+
+      await updateDoc(postRef, {
+        replies: updatedReplies,
+        updatedAt: serverTimestamp()
+      });
+
+      return {
+        success: true,
+        message: 'تم حذف الرد بنجاح'
+      };
+    } catch (error) {
+      console.error("Error deleting reply:", error);
+      return { success: false, message: 'حدث خطأ أثناء حذف الرد' };
     }
   }
 
@@ -138,7 +309,6 @@ class PostsManager {
   }
 
   // Add reply to a post
-  // الآن لا تحتاج لتمرير authorId و authorName
   async addReply(postId, content, isPlatformPost = false) {
     const currentUser = await userManager.getCurrentUser();
     if (!currentUser) {
@@ -183,7 +353,6 @@ class PostsManager {
   }
 
   // Toggle like on a post
-  // الآن لا تحتاج لتمرير userId
   async toggleLike(postId, isPlatformPost = false) {
     const currentUser = await userManager.getCurrentUser();
     if (!currentUser) {
@@ -230,7 +399,6 @@ class PostsManager {
   }
 
   // Delete a post (author or admin only)
-  // الآن لا تحتاج لتمرير userId
   async deletePost(postId, isPlatformPost = false) {
     const currentUser = await userManager.getCurrentUser();
     if (!currentUser) {
@@ -346,119 +514,7 @@ class PostsManager {
       return { success: false, message: 'حدث خطأ أثناء جلب الإحصائيات' };
     }
   }
-async editPost(postId, newContent, isPlatformPost = false) {
-    const currentUser = await userManager.getCurrentUser();
-    if (!currentUser) {
-      return { success: false, message: 'يجب تسجيل الدخول لتعديل المنشور' };
-    }
-    if (!newContent || newContent.trim() === '') {
-      return { success: false, message: 'لا يمكن حفظ منشور فارغ' };
-    }
 
-    try {
-      const collectionRef = isPlatformPost ? this.platformPostsCollectionRef : this.postsCollectionRef;
-      const postRef = doc(collectionRef, postId);
-      const postSnap = await getDoc(postRef);
-      if (!postSnap.exists()) {
-        return { success: false, message: 'المنشور غير موجود' };
-      }
-      const postData = postSnap.data();
-      if (postData.authorId !== currentUser.id && !currentUser.isAdmin) {
-        return { success: false, message: 'ليس لديك صلاحية لتعديل هذا المنشور' };
-      }
-
-      await updateDoc(postRef, {
-        content: newContent.trim(),
-        formattedContent: this.formatTextWithLinks(newContent.trim()),
-        updatedAt: serverTimestamp()
-      });
-
-      return { success: true, message: 'تم تعديل المنشور بنجاح' };
-    } catch (error) {
-      console.error("Error editing post:", error);
-      return { success: false, message: 'حدث خطأ أثناء تعديل المنشور' };
-    }
-  }
-
-  // Edit reply
-  async editReply(postId, replyId, newContent, isPlatformPost = false) {
-    const currentUser = await userManager.getCurrentUser();
-    if (!currentUser) {
-      return { success: false, message: 'يجب تسجيل الدخول لتعديل الرد' };
-    }
-    if (!newContent || newContent.trim() === '') {
-      return { success: false, message: 'لا يمكن حفظ رد فارغ' };
-    }
-
-    try {
-      const collectionRef = isPlatformPost ? this.platformPostsCollectionRef : this.postsCollectionRef;
-      const postRef = doc(collectionRef, postId);
-      const postSnap = await getDoc(postRef);
-      if (!postSnap.exists()) {
-        return { success: false, message: 'المنشور غير موجود' };
-      }
-
-      const postData = postSnap.data();
-      const replies = postData.replies || [];
-      const replyIndex = replies.findIndex(r => r.id === replyId);
-      if (replyIndex === -1) {
-        return { success: false, message: 'الرد غير موجود' };
-      }
-
-      const reply = replies[replyIndex];
-      if (reply.authorId !== currentUser.id && !currentUser.isAdmin) {
-        return { success: false, message: 'ليس لديك صلاحية لتعديل هذا الرد' };
-      }
-
-      replies[replyIndex].content = newContent.trim();
-      replies[replyIndex].formattedContent = this.formatTextWithLinks(newContent.trim());
-      replies[replyIndex].updatedAt = new Date();
-
-      await updateDoc(postRef, { replies, updatedAt: serverTimestamp() });
-
-      return { success: true, message: 'تم تعديل الرد بنجاح' };
-    } catch (error) {
-      console.error("Error editing reply:", error);
-      return { success: false, message: 'حدث خطأ أثناء تعديل الرد' };
-    }
-  }
-
-  // Delete reply
-  async deleteReply(postId, replyId, isPlatformPost = false) {
-    const currentUser = await userManager.getCurrentUser();
-    if (!currentUser) {
-      return { success: false, message: 'يجب تسجيل الدخول لحذف الرد' };
-    }
-
-    try {
-      const collectionRef = isPlatformPost ? this.platformPostsCollectionRef : this.postsCollectionRef;
-      const postRef = doc(collectionRef, postId);
-      const postSnap = await getDoc(postRef);
-      if (!postSnap.exists()) {
-        return { success: false, message: 'المنشور غير موجود' };
-      }
-
-      const postData = postSnap.data();
-      const replies = postData.replies || [];
-      const replyIndex = replies.findIndex(r => r.id === replyId);
-      if (replyIndex === -1) {
-        return { success: false, message: 'الرد غير موجود' };
-      }
-
-      const reply = replies[replyIndex];
-      if (reply.authorId !== currentUser.id && !currentUser.isAdmin) {
-        return { success: false, message: 'ليس لديك صلاحية لحذف هذا الرد' };
-      }
-
-      replies.splice(replyIndex, 1);
-      await updateDoc(postRef, { replies, updatedAt: serverTimestamp() });
-
-      return { success: true, message: 'تم حذف الرد بنجاح' };
-    } catch (error) {
-      console.error("Error deleting reply:", error);
-      return { success: false, message: 'حدث خطأ أثناء حذف الرد' };
-    }
-  }
   // Search posts
   async searchPosts(searchTerm, isPlatformPost = false, limitCount = 20) {
     if (!searchTerm || searchTerm.trim().length === 0) {
@@ -468,41 +524,26 @@ async editPost(postId, newContent, isPlatformPost = false) {
     try {
       const collectionRef = isPlatformPost ? this.platformPostsCollectionRef : this.postsCollectionRef;
       const querySnapshot = await getDocs(collectionRef);
+      const allPosts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-      const posts = [];
-      const searchTermLower = searchTerm.toLowerCase();
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        if (data.isVisible &&
-          (data.content.toLowerCase().includes(searchTermLower) ||
-            data.authorName.toLowerCase().includes(searchTermLower))) {
-          posts.push({
-            id: doc.id,
-            ...data,
-            createdAt: data.createdAt?.toDate?.() || new Date(),
-            updatedAt: data.updatedAt?.toDate?.() || new Date(),
-            formattedContent: this.formatTextWithLinks(data.content)
-          });
-        }
+      // Filter posts based on search term
+      const filteredPosts = allPosts.filter(post => {
+        const postContent = `${post.title} ${post.content}`.toLowerCase();
+        return postContent.includes(searchTerm.toLowerCase());
       });
 
-      // Sort by creation date (newest first)
-      posts.sort((a, b) => b.createdAt - a.createdAt);
+      // Paginate results
+      const paginatedPosts = filteredPosts.slice(0, limitCount);
 
-      // Limit results
-      const limitedPosts = posts.slice(0, limitCount);
-
-      return { success: true, posts: limitedPosts };
+      return { success: true, posts: paginatedPosts };
     } catch (error) {
       console.error("Error searching posts:", error);
-      return { success: false, message: 'حدث خطأ أثناء البحث', posts: [] };
+      return { success: false, message: 'حدث خطأ أثناء البحث عن المنشورات', posts: [] };
     }
   }
 }
 
-// Create singleton instance
-const postsManager = new PostsManager();
+const postsManager = new EnhancedPostsManager();
 
+// تصدير الكائن postsManager ليصبح متاحًا للاستيراد في ملفات أخرى
 export default postsManager;
-

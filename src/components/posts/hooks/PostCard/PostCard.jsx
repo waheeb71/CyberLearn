@@ -7,7 +7,7 @@ import PostControls from './PostControls';
 import ReplySection from '../ReplySection/ReplySection';
 import { formatDate, getUserInitials, getUserAvatarColor } from '../utils/postHelpers';
 import "../../styles/posts.css";
-import postsManager from './../../../../utils/postsManager';
+
 
 const PostCard = ({ 
   post, 

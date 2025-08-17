@@ -15,7 +15,7 @@ import Asad from './components/asad';
 import AdminPanel from './components/AdminPanel';
 import PopupSystem from './components/PopupSystem';
 import userManager from './utils/userManager';
-import PostsPage from './components/PostsPage';
+import PostDetail from './components/posts/hooks/PostCard/PostDetail';
 import PostsPageNew from './components/posts/PostsPageNew';
 import AdminDashboard from './components/AdminDashboard';
 import { Helmet } from "react-helmet";
@@ -118,6 +118,9 @@ function App() {
             <Route path="/register" element={currentUser ? <Navigate to="/dashboard" /> : <RegisterPage onRegister={handleRegister} />} />
             <Route path="/dashboard" element={currentUser ? <Dashboard user={currentUser} /> : <Navigate to="/login" />} />
             <Route path="/posts" element={currentUser ? <PostsPageNew user={currentUser} /> : <Navigate to="/login" />} />
+           <Route path="/posts/:postId" element={<PostDetail />} />
+
+
             <Route path="/admin" element={currentUser ? <AdminDashboard user={currentUser} /> : <Navigate to="/login" />} />
             <Route path="/learning-path" element={currentUser ? <LearningPath user={currentUser} onUpdateProgress={handleUpdateProgress} /> : <Navigate to="/login" />} />
             <Route path="/profile" element={currentUser ? <Profile user={currentUser} /> : <Navigate to="/login" />} />

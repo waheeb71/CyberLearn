@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, MessageCircle, Share2, Bookmark } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Copy } from 'lucide-react';
 
 const PostActions = ({ 
   post,
@@ -11,26 +11,37 @@ const PostActions = ({
   onReplyToggle,
   showReplies
 }) => {
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `منشور من ${post.authorName}`,
-          text: post.content.substring(0, 100) + '...',
-          url: window.location.href
-        });
-      } catch (error) {
-        console.log('Error sharing:', error);
-      }
-    } else {
-      // Fallback: copy to clipboard
-      try {
-        await navigator.clipboard.writeText(window.location.href);
-        // You could show a toast notification here
-        alert('تم نسخ الرابط');
-      } catch (error) {
-        console.log('Error copying to clipboard:', error);
-      }
+const handleShare = async () => {
+  const postUrl = `${window.location.origin}/posts/${post.id}`; // رابط المنشور الفريد
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: `منشور من ${post.authorName}`,
+        text: post.content.substring(0, 100) + '...',
+        url: postUrl
+      });
+    } catch (error) {
+      console.log('Error sharing:', error);
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(postUrl);
+      alert('تم نسخ رابط المنشور');
+    } catch (error) {
+      console.log('Error copying to clipboard:', error);
+    }
+  }
+};
+
+
+
+  const handleCopyContent = async () => {
+    try {
+      await navigator.clipboard.writeText(post.content);
+      alert('تم نسخ محتوى المنشور');
+    } catch (error) {
+      console.error('Error copying content:', error);
     }
   };
 
@@ -69,13 +80,10 @@ const PostActions = ({
         {currentUser && (
           <button
             className="action-button"
-            title="حفظ"
-            onClick={() => {
-              // Implement bookmark functionality
-              console.log('Bookmark post:', post.id);
-            }}
+            title="نسخ محتوى المنشور"
+            onClick={handleCopyContent}
           >
-            <Bookmark className="w-5 h-5" />
+            <Copy className="w-5 h-5" />
           </button>
         )}
       </div>

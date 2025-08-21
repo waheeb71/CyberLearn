@@ -345,12 +345,8 @@ const [loadingReplies, setLoadingReplies] = useState({});
         <meta name="description" content="استعرض أحدث المنشورات وتفاعل مع المجتمع في مجال الأمن السيبراني." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
-
-
   <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
   <meta name="author" content="waheeb al_sharabi" />
-
-
   <meta property="og:title" content="مسار تعلم الأمن السيبراني الشامل" />
   <meta property="og:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
   <meta property="og:image" content="https://cyberlearn0.netlify.app/og-image.png" />

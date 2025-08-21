@@ -19,11 +19,12 @@ import PostDetail from './components/posts/hooks/PostCard/PostDetail';
 import PostsPageNew from './components/posts/PostsPageNew';
 import AdminDashboard from './components/AdminDashboard';
 import { Helmet } from "react-helmet";
-
+import AdsenseAd from './components/AdsenseAd'; // مكون الإعلان الجديد
 function App() {
   // ===== Hooks ثابتة في أعلى مستوى =====
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+    const [adsenseLoaded, setAdsenseLoaded] = useState(false); 
 
   // ===== جلب بيانات المستخدم عند البداية =====
   useEffect(() => {
@@ -34,18 +35,20 @@ function App() {
     };
     fetchUser();
   }, []);
-/*
+
   // ===== تحميل سكربت AdSense بطريقة آمنة =====
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-    script.async = true;
-    script.crossOrigin = "anonymous";
-    document.head.appendChild(script);
+    if (!loading) {
+      const script = document.createElement('script');
+      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.onload = () => setAdsenseLoaded(true); // تم تحميل السكريبت
+      document.head.appendChild(script);
+      return () => document.head.removeChild(script);
+    }
+  }, [loading]);
 
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  }, []);
-*/
   // ===== Handlers =====
   const handleLogin = async (email, password) => {
     const result = await userManager.login(email, password);
@@ -109,6 +112,7 @@ function App() {
 
       <Router>
         <div className="min-h-screen bg-background text-foreground">
+               {adsenseLoaded && <AdsenseAd />}
           <PopupSystem />
           <Navbar currentUser={currentUser} onLogout={handleLogout} />
           <Routes>

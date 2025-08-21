@@ -83,7 +83,7 @@ const achievements = [
               <User className="w-16 h-16 text-primary-foreground" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-foreground mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4" style={{ color: 'white' }}>
             وهيب الشرعبي
           </h1>
           <p className="text-xl text-muted-foreground mb-6">
@@ -96,7 +96,7 @@ const achievements = [
 
           <Card className="bg-muted/50 mt-4">
   <CardContent className="pt-4">
-    <h3 className="font-semibold text-sm mb-3">المساهمون</h3>
+    <h3 className="font-semibold text-sm mb-3" style={{ color: 'red' }}>المساهمون</h3>
     <div className="flex justify-center gap-4">
       {contributors.map((contributor, index) => (
         <a

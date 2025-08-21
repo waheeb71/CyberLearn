@@ -210,15 +210,16 @@ const LearningPath = () => {
           title: 'الاستجابة للحوادث',
           description: 'تخصص في التعامل مع الحوادث الأمنية والاستجابة لها',
           links: [
-            { name: 'Certified Incident Handler (GCIH)', url: 'https://www.giac.org/certification/certified-incident-handler-gcih' }
+            { name: 'Certified Incident Handler (GCIH)', url: 'https://t.me/c_yber_r/48' },
+              { name: 'BlueTeam: eCIR Prep :  (eCIR', url: 'https://netriders.academy/all-courses/incident-response/' }
           ]
         },
         {
           title: 'أمن السحابة',
           description: 'تخصص في أمان الحوسبة السحابية',
           links: [
-            { name: 'Certified Cloud Security Professional (CCSP)', url: 'https://www.isc2.org/Certifications/CCSP' },
-            { name: 'AWS Certified Security – Specialty', url: 'https://aws.amazon.com/certification/certified-security-specialty/' }
+            { name: 'Certified Cloud Security Professional (CCSP)', url: 'https://t.me/NusurFile/468' },
+            { name: 'AWS Certified Security – Specialty', url: 'https://t.me/c_yber_r/60' }
           ]
         }
       ]
@@ -261,11 +262,18 @@ const LearningPath = () => {
           links: [
             { name: 'OWASP Juice Shop', url: 'https://owasp.org/www-project-juice-shop/' }
           ]
+        },
+          {
+          title: 'PortSwigger ',
+          description: 'تطبيق ويب ضعيف لتعلم أمان تطبيقات الويب',
+          links: [
+            { name: 'Web Security Academy: OWASP Juice Shop', url: 'https://portswigger.net/web-security' }
+          ]
         }
       ]
     },
     continuousLearning: {
-      title: '📚 التعلم المستمر',
+      title: ' التعلم المستمر',
       description: 'موارد للبقاء على اطلاع بأحدث التطورات في الأمن السيبراني',
       items: [
         {
@@ -296,13 +304,21 @@ const LearningPath = () => {
           links: [
             { name: 'Cybrary', url: 'https://www.youtube.com/@CybraryIt' },
             { name: 'Hak5', url: 'https://www.youtube.com/user/Hak5Darren' },
-            { name: 'Professor Messer', url: 'https://www.youtube.com/user/professormesser' }
+            { name: 'Professor Messer', url: 'https://www.youtube.com/user/professormesser' },
+            { name: 'John Hammond:', url: 'https://www.youtube.com/c/JohnHammond010' },
+            { name: 'LiveOverflow', url: 'https://www.youtube.com/c/LiveOverflow' },
+              { name: 'David Bombal:', url: 'https://www.youtube.com/c/DavidBombal' },
+               { name: 'The Cyber Mentor:', url: 'https://www.youtube.com/c/TheCyberMentor' },
+                   { name: 'IppSec:', url: 'https://www.youtube.com/c/IppSec' },
+                     { name: 'NetworkChuck:', url: 'https://www.youtube.com/c/NetworkChuck' },
+
+
           ]
         }
       ]
     },
     jobRoles: {
-      title: '💼 الأدوار الوظيفية',
+      title: ' الأدوار الوظيفية',
       description: 'تعرف على الفرص الوظيفية في مجال الأمن السيبراني',
       items: [
         {
@@ -328,7 +344,7 @@ const LearningPath = () => {
       ]
     },
     certifications: {
-      title: '📜 الشهادات',
+      title: ' الشهادات',
       description: 'الشهادات المهنية المعتمدة في مجال الأمن السيبراني',
       items: [
         {
@@ -350,7 +366,7 @@ const LearningPath = () => {
       ]
     },
     roadmap: {
-      title: '📅 خارطة طريق لمدة 6 أشهر',
+      title: ' خارطة طريق لمدة 6 أشهر',
       description: 'خطة تعلم منظمة لمدة 6 أشهر',
       items: [
         {
@@ -371,7 +387,7 @@ const LearningPath = () => {
       ]
     },
     additionalResources: {
-      title: '💡 موارد إضافية',
+      title: ' موارد إضافية',
       description: 'موارد ومراجع إضافية مفيدة',
       items: [
         {

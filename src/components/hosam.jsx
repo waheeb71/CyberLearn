@@ -68,7 +68,7 @@ const achievements = [
               <User className="w-16 h-16 text-primary-foreground" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-foreground mb-4">
+          <h1 className="text-4xl font-bold text-foreground mb-4" style={{ color: 'white' }}>
            حسام الفلاحي
           </h1>
           <p className="text-xl text-muted-foreground mb-6">

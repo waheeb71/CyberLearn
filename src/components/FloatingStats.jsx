@@ -5,7 +5,7 @@ export default function FloatingStats({ usersCount, visitorsCount }) {
     <div className="fixed top-130 right-5 z-2 flex flex-col gap-2">
       {/* بطاقة الترحيب */}
       <div className="bg-gradient-to-r from-blue-500 to-indigo-00 text-white shadow-xl rounded-2xl p-1">
-        <h1 className="text-lg font-bold text-center">
+        <h1 className="text-lg font-bold text-center" style={{ color: 'white' }}>
           👋 مرحباً بك في <span className="text-yellow-300">CyberLearn</span>
         </h1>
       </div>

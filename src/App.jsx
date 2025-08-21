@@ -18,6 +18,10 @@ import userManager from './utils/userManager';
 import PostDetail from './components/posts/hooks/PostCard/PostDetail';
 import PostsPageNew from './components/posts/PostsPageNew';
 import AdminDashboard from './components/AdminDashboard';
+import AIDashboard from './components/AIDashboard.jsx';
+import CybersecurityDashboard  from './components/CybersecurityDashboard.jsx';
+import Cys_learningPath  from './components/Cys_learningPath.jsx';
+import Ai_learningPath  from './components/Ai_learningPath.jsx';
 import { Helmet } from "react-helmet";
 import AdsenseAd from './components/AdsenseAd'; // مكون الإعلان الجديد
 function App() {
@@ -121,12 +125,17 @@ function App() {
             <Route path="/login" element={currentUser ? <Navigate to="/dashboard" /> : <LoginPage onLogin={handleLogin} />} />
             <Route path="/register" element={currentUser ? <Navigate to="/dashboard" /> : <RegisterPage onRegister={handleRegister} />} />
             <Route path="/dashboard" element={currentUser ? <Dashboard user={currentUser} /> : <Navigate to="/login" />} />
+            <Route path="/cybersecurity-dashboard" element={currentUser ? <CybersecurityDashboard /> : <Navigate to="/login" />} />
+        <Route path="/ai-dashboard" element={currentUser ? <AIDashboard /> : <Navigate to="/login" />} />
+
             <Route path="/posts" element={currentUser ? <PostsPageNew user={currentUser} /> : <Navigate to="/login" />} />
            <Route path="/posts/:postId" element={<PostDetail />} />
 
 
             <Route path="/admin" element={currentUser ? <AdminDashboard user={currentUser} /> : <Navigate to="/login" />} />
             <Route path="/learning-path" element={currentUser ? <LearningPath user={currentUser} onUpdateProgress={handleUpdateProgress} /> : <Navigate to="/login" />} />
+            <Route path="/cybersecurity-learning-path" element={currentUser ? <Cys_learningPath user={currentUser} onUpdateProgress={handleUpdateProgress} /> : <Navigate to="/login" />} />
+            <Route path="/ai-learning-path" element={currentUser ? <Ai_learningPath user={currentUser} onUpdateProgress={handleUpdateProgress} /> : <Navigate to="/login" />} />
             <Route path="/profile" element={currentUser ? <Profile user={currentUser} /> : <Navigate to="/login" />} />
             <Route path="/sponsor" element={<SponsorPage />} />
             <Route path="/sponsor2" element={<Hosam />} />

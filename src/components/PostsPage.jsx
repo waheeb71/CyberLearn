@@ -6,8 +6,8 @@ import { Helmet } from "react-helmet";
 
 const PostsPage = () => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [posts, setPosts] = useState([]); // منشورات المستخدمين فقط
-  const [platformPosts, setPlatformPosts] = useState([]); // منشورات المنصة فقط
+  const [posts, setPosts] = useState([]);
+  const [platformPosts, setPlatformPosts] = useState([]); 
   const [combinedUserPosts, setCombinedUserPosts] = useState([]); // قائمة مدمجة لقسم المستخدمين
   const [newPost, setNewPost] = useState('');
   const [replyTexts, setReplyTexts] = useState({});

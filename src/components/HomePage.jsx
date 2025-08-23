@@ -11,7 +11,6 @@ import { getUsersCount } from "../utils/usersCount";
 import { trackVisitor, getVisitorsCount } from "../utils/visitorsCount";
 import FloatingStats from "@/components/FloatingStats";
 import AdsenseAd from "./AdsenseAd";
-
 const HomePage = ({ currentUser }) => {
     const [usersCount, setUsersCount] = useState(0);
     const [visitorsCount, setVisitorsCount] = useState(0);

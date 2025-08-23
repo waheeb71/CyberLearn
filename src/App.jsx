@@ -23,7 +23,7 @@ import CybersecurityDashboard  from './components/CybersecurityDashboard.jsx';
 import Cys_learningPath  from './components/Cys_learningPath.jsx';
 import Ai_learningPath  from './components/Ai_learningPath.jsx';
 import { Helmet } from "react-helmet";
-import AdsenseAd from './components/AdsenseAd'; // مكون الإعلان الجديد
+import AdsenseAd from './components/AdsenseAd'; 
 function App() {
   // ===== Hooks ثابتة في أعلى مستوى =====
   const [currentUser, setCurrentUser] = useState(null);
@@ -96,13 +96,11 @@ function App() {
         <title>مسار تعلم الأمن السيبراني الشامل</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-adsense-account" content="ca-pub-2404732748519909" />
-        <meta name="description" content="ابدأ رحلتك في تعلم الأمن السيبراني من الصفر حتى الاحتراف، مع خطة منظمة وموارد تعليمية عالية الجودة موجهة للطلاب والمهتمين بالمجال." />
         <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
         <meta name="author" content="waheeb al_sharabi" />
 
         {/* OpenGraph */}
         <meta property="og:title" content="مسار تعلم الأمن السيبراني الشامل" />
-        <meta property="og:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
         <meta property="og:image" content="https://cyberlearn0.netlify.app/og-image.png" />
         <meta property="og:url" content="https://cyberlearn0.netlify.app" />
         <meta property="og:type" content="website" />
@@ -110,7 +108,6 @@ function App() {
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="مسار تعلم الأمن السيبراني الشامل" />
-        <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
         <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
       </Helmet>
 

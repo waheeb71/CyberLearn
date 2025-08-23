@@ -2,14 +2,14 @@
 import React, { useState } from 'react';
 import PopupManagement from './PopupManagement';
 import AnnouncementsManagement from './AnnouncementsManagement';
-import UsersManagement from './UsersManagement'; // تم إضافة هذا الاستيراد
+import UsersManagement from './UsersManagement'; 
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils'; // تأكد من استيراد دالة cn إذا كنت تستخدمها
+import { cn } from '@/lib/utils'; 
 
 const AdminPanel = () => {
   const [activeSection, setActiveSection] = useState('popup');
 
-  // هذه الدالة تعرض المكون الصحيح بناءً على القسم النشط
+ 
   const renderSection = () => {
     switch (activeSection) {
       case 'popup':

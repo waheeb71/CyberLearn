@@ -53,29 +53,7 @@ const Navbar = ({ currentUser, onLogout }) => {
 
   return (
     <>
-      <Helmet>
-    
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="google-adsense-account" content="ca-pub-2404732748519909"></meta>
-  <title>مسار تعلم الأمن السيبراني الشامل</title>
-  <meta name="description" content="ابدأ رحلتك في تعلم الأمن السيبراني من الصفر حتى الاحتراف، مع خطة منظمة وموارد تعليمية عالية الجودة موجهة للطلاب والمهتمين بالمجال." />
-  <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
-  <meta name="author" content="waheeb al_sharabi" />
-
-
-  <meta property="og:title" content="مسار تعلم الأمن السيبراني الشامل" />
-  <meta property="og:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
-  <meta property="og:image" content="https://cyberlearn0.netlify.app/og-image.png" />
-  <meta property="og:url" content="https://cyberlearn0.netlify.app" />
-  <meta property="og:type" content="website" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="مسار تعلم الأمن السيبراني الشامل" />
-  <meta name="twitter:description" content="ابدأ رحلتك في تعلم الأمن السيبراني بخطة واضحة وشاملة، خطوة بخطوة حتى الاحتراف." />
-  <meta name="twitter:image" content="https://cyberlearn0.netlify.app/og-image.png" />
-  <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
  
-      </Helmet>
    
     <nav className="bg-card border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

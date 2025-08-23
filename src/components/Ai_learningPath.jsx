@@ -121,16 +121,22 @@ const LearningPathAI = () => {
           title: 'أساسيات الرياضيات للذكاء الاصطناعي',
           description: 'تعلم الجبر الخطي، الاحتمالات، والتفاضل والتكامل',
           links: [
-            { name: 'Linear Algebra - English', url: 'https://www.khanacademy.org/math/linear-algebra' },
-            { name: 'الاحتمالات والإحصاء - عربي', url: 'https://www.youtube.com/playlist?list=PLdo5W4Nhv31bHfN5Q91pl2pOB5z0VY1ne' }
+         
+            { name: 'الجبر الخطي لعلم البيانات', url: 'https://youtube.com/playlist?list=PLtsZ69x5q-X_mtZI2heqry-nw3-6apBqm&si=ZV9ps_FpWdMoYlod' }
           ]
         },
         {
           title: 'أساسيات البرمجة (Python)',
           description: 'Python هي لغة أساسية لتطبيقات الذكاء الاصطناعي',
           links: [
-            { name: 'Python for Beginners - English', url: 'https://www.youtube.com/playlist?list=PL1A2CSdiySGJQnHqLh7k0PjkH0iBqRbJ0' },
-            { name: 'Python للمبتدئين - عربي', url: 'https://www.youtube.com/playlist?list=PLU6Bbb2I2KZtP4FvwO1ZXvWzMg2bPqqDe' }
+           {
+    name: 'لديك خلفية عن لغة برمجة أخرى - تابع صحيح',
+    url: 'https://youtu.be/pdsc9SVW-S8?si=KS7qaBgJmGIqfHQz'
+  },
+  {
+    name: 'لا تعرف عن لغات البرمجة شيئًا - تابع هذه السلسلة',
+    url: 'https://youtube.com/playlist?list=PLDoPjvoNmBAyE_gei5d18qkfIe-Z8mocs&si=PvHZnjru_yWAFuF_'
+  }
           ]
         },
         {
@@ -138,7 +144,7 @@ const LearningPathAI = () => {
           description: 'فهم المفاهيم الأساسية مثل التعلم الآلي والشبكات العصبية',
           links: [
             { name: 'Intro to AI - English', url: 'https://www.coursera.org/learn/ai-for-everyone' },
-            { name: 'مقدمة في الذكاء الاصطناعي - عربي', url: 'https://www.youtube.com/playlist?list=PLbmvogVj5nJRyJj5Z6-KqZctP4Umgq2RZ' }
+            { name: 'مقدمة في الذكاء الاصطناعي - عربي', url: 'https://youtube.com/playlist?list=PLXlHqMRg9lAa48zcXmM08DonedIxZcoz5&si=tEjKHCGizd_HGaLn' }
           ]
         }
       ]
@@ -151,37 +157,70 @@ const LearningPathAI = () => {
           title: 'مقدمة في التعلم الآلي',
           description: 'أساسيات الخوارزميات مثل الانحدار الخطي وشجرة القرار',
           links: [
-            { name: 'Machine Learning - Andrew Ng', url: 'https://www.coursera.org/learn/machine-learning' }
+
+            {
+    name: 'Machine Learning - Andrew Ng (نظري)',
+    url: 'https://youtube.com/playlist?list=PLtsZ69x5q-X9j44MdSX-NGuOhGXOY0aqH&si=ueqxKy9ViX39MUbE'
+  },
+  {
+    name: 'Machine Learning - Andrew Ng (عملي)',
+    url: 'https://t.me/c_yber_r/79'
+  }
+
           ]
         },
         {
           title: 'تعلم عميق',
           description: 'مقدمة لشبكات الأعصاب العميقة والتعلم العميق',
           links: [
-            { name: 'Deep Learning Specialization', url: 'https://www.coursera.org/specializations/deep-learning' }
+            { name: 'Deep Learning عربي', url: 'https://t.me/c_yber_r/72' },
+             { name:  'تعلم TensorFlow للتعلم العميق - من الصفر إلى الاحتراف', url: 'https://t.me/c_yber_r/241' },
+            { name: 'التعلم العميق - أندرو نج (اختياري وانصح فية)', url: 'https://www.coursera.org/specializations/deep-learning' }
           ]
         }
       ]
     },
     practicalProjects: {
-      title: ' المشاريع العملية',
-      description: 'طبق ما تعلمته على مشاريع حقيقية',
-      items: [
-        {
-          title: 'مشروع التعرف على الصور',
-          description: 'تصميم نموذج للتعرف على الصور باستخدام CNN',
-          links: [
-            { name: 'Image Classification Project', url: 'https://www.kaggle.com/competitions' }
-          ]
-        },
-        {
-          title: 'مشروع معالجة اللغة الطبيعية',
-          description: 'استخدام NLP لتحليل النصوص',
-          links: [
-            { name: 'NLP Project', url: 'https://www.kaggle.com/competitions' }
-          ]
-        }
+      title: 'المشاريع العملية',
+  description: 'طبق ما تعلمته على مشاريع حقيقية',
+  items: [
+    {
+      title: 'مشروع التعرف على الصور',
+      description: 'تصميم نموذج للتعرف على الصور باستخدام الشبكات العصبية التلافيفية (CNN)',
+      links: [
+        { name: 'مشروع التعرف على الوجه', url: 'https://youtu.be/2z70y_8kKA0?si=cuHF8ecxaXSGBDwu' },
+        { name: 'مشروع تصنيف الصور على Kaggle', url: 'https://www.kaggle.com/competitions' },
+        { name: 'مشروع Food Vision على GitHub', url: 'https://github.com/mrdbourke/tensorflow-deep-learning' }
       ]
+    },
+    {
+      title: 'مشروع معالجة اللغة الطبيعية',
+      description: 'استخدام NLP لتحليل النصوص وبناء نماذج لفهم النصوص',
+      links: [
+        { name: 'مشروع تصنيف النصوص على Kaggle', url: 'https://www.kaggle.com/competitions' },
+        { name: 'مشروع SkimLit - استخراج المعلومات من النصوص', url: 'https://github.com/mrdbourke/skimlit' },
+          { name: 'انشاء مودل ذكاء اصطناعي باستخدام بايثون لعمل تصنيف للصور ', url: 'https://youtu.be/3wQCImF_eEg?si=ozMla8_HMvoU4ykt' },
+      ]
+    },
+    {
+      title: 'مشروع التنبؤ بالبيانات الزمنية',
+      description: 'بناء نموذج للتنبؤ بحركة الأسعار أو البيانات الزمنية باستخدام RNN أو LSTM',
+      links: [
+      
+       { name: 'مشروع التنبؤ بالبيانات الزمنية على GitHub', url: 'https://github.com/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb' }
+      ]
+    },
+    {
+      title: 'مشروع التعلم بالنقل (Transfer Learning)',
+      description: 'استخدام نماذج مدربة مسبقًا لتحسين أداء مشاريعك بسرعة',
+      links: [
+        { name: 'العديد من المشاريع ', url: 'https://github.com/tensorflow/models/tree/master/official/vision' },
+        { name: 'مشروع التعرف على الأرقام (MNIST)', url: 'https://github.com/aymericdamien/TensorFlow-Examples' },
+
+     
+      ]
+    }
+  ]
     },
     continuousLearning: {
       title: ' التعلم المستمر',
@@ -192,7 +231,8 @@ const LearningPathAI = () => {
           description: 'تابع أحدث الأبحاث والتقنيات',
           links: [
             { name: 'arXiv AI', url: 'https://arxiv.org/list/cs.AI/recent' },
-            { name: 'Towards Data Science', url: 'https://towardsdatascience.com/' }
+            { name: 'Towards Data Science', url: 'https://towardsdatascience.com/' },
+            { name: 'قناة الذكاء الاصطناعي', url: 'https://t.me/c_yber_r' },
           ]
         }
       ]

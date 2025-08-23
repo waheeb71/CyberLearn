@@ -93,7 +93,7 @@ function App() {
     <>
       {/* ===== Helmet ثابت في أعلى JSX ===== */}
       <Helmet>
-        <title>مسار تعلم الأمن السيبراني الشامل</title>
+       
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="google-adsense-account" content="ca-pub-2404732748519909" />
         <meta name="keywords" content="الأمن السيبراني, تعلم الأمن السيبراني, سيبراني, اختراق, حماية الشبكات, تعلم الهكر الأخلاقي, أمن المعلومات" />
